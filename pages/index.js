@@ -3,7 +3,7 @@ import Head from 'next/head';
 const Home = () => {
 	return (
 		<Head>
-			<title>GEMS</title>
+			<title>GEMS Academy</title>
 		</Head>
 	)
 }
