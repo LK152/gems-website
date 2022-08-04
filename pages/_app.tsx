@@ -1,4 +1,3 @@
-import * as React from 'react';
 import type { AppProps } from 'next/app';
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import { ThemeProvider, CssBaseline, createTheme } from '@mui/material';
@@ -17,7 +16,7 @@ interface MyAppProps extends AppProps {
 const clientSideEmotionCache = createEmotionCache();
 const lightTheme = createTheme(lightThemeOptions);
 
-const MyApp: React.FC<MyAppProps> = (props) => {
+const MyApp = (props: MyAppProps) => {
 	const {
 		Component,
 		emotionCache = clientSideEmotionCache,
