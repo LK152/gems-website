@@ -1,0 +1,12 @@
+.navbarLink {
+    color: white;
+    opacity: 0.8;
+    -webkit-transition: opacity .5s cubic-bezier(0.25, 0.1, 0.25, 1);
+    -moz-transition: opacity .5s cubic-bezier(0.25, 0.1, 0.25, 1);
+    -o-transition: opacity .5s cubic-bezier(0.25, 0.1, 0.25, 1);
+    transition: opacity .5s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.navbarLink:hover {
+    opacity: 1;
+}

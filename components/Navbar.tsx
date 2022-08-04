@@ -1,6 +1,6 @@
 import { AppBar, Box, Toolbar, Stack, Typography } from '@mui/material';
 import NextMuiLink from 'components/NextMuiLink';
-import lightThemeOptions from 'styles/lightThemeOptions';
+import navbarStyles from 'styles/Navbar.module.css';
 
 const Navbar = () => {
 	const navbarLinks: navbarLinkProps[] = [
@@ -13,7 +13,7 @@ const Navbar = () => {
 
 	return (
 		<Box sx={{ flexGrow: 1 }}>
-			<AppBar position='static'>
+			<AppBar position='fixed'>
 				<Toolbar component='nav'>
 					<Stack direction='row' spacing={2}>
 						{navbarLinks.map(({ title, path }, i) => (
@@ -23,7 +23,7 @@ const Navbar = () => {
 								variant='button'
 								sx={{ textDecoration: 'none' }}
 							>
-								<Typography color='white'>{title}</Typography>
+								<Typography className={navbarStyles.navbarLink}>{title}</Typography>
 							</NextMuiLink>
 						))}
 					</Stack>

@@ -1,6 +1,7 @@
 import type { AppProps } from 'next/app';
+import Head from 'next/head';
 import { CacheProvider, EmotionCache } from '@emotion/react';
-import { ThemeProvider, CssBaseline, createTheme } from '@mui/material';
+import { ThemeProvider, CssBaseline, createTheme, Box } from '@mui/material';
 import createEmotionCache from 'utilities/createEmotionCache';
 import lightThemeOptions from 'styles/lightThemeOptions';
 import '@fontsource/roboto/300.css';
@@ -24,15 +25,18 @@ const MyApp = (props: MyAppProps) => {
 	} = props;
 
 	return (
-        <div style={{backgroundColor: 'black', height: '100vh', width: '100vw'}}>
-		<CacheProvider value={emotionCache}>
-			<ThemeProvider theme={lightTheme}>
-				<CssBaseline />
-				<Navbar />
-				<Component {...pageProps} />
-			</ThemeProvider>
-		</CacheProvider>
-        </div>
+		<Box sx={{ minWidth: '100vw', minHeight: '100vh'}}>
+			<CacheProvider value={emotionCache}>
+				<Head>
+					<title>GEMS Academy</title>
+				</Head>
+				<ThemeProvider theme={lightTheme}>
+					<CssBaseline />
+					<Navbar />
+					<Component {...pageProps} />
+				</ThemeProvider>
+			</CacheProvider>
+		</Box>
 	);
 };
 
