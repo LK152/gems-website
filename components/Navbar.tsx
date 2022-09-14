@@ -1,21 +1,25 @@
 import { AppBar, Box, Toolbar, Stack, Typography } from '@mui/material';
+import Image from 'next/image';
 import NextMuiLink from 'components/NextMuiLink';
 import navbarStyles from 'styles/Navbar.module.css';
+import logo from 'public/Pics/logo.png';
 
 const Navbar = () => {
 	const navbarLinks: navbarLinkProps[] = [
-		{ title: 'TOEFL', path: '/toefl' },
-		{ title: 'IELTS', path: '/ielts' },
-		{ title: 'SAT', path: '/sat' },
-		{ title: 'GRE', path: '/gre' },
-		{ title: 'GMAT', path: '/gmat' },
+		{title: 'SAT', path: '/sat'}, 
+		{title: 'AP', path: '/ap'}, 
+		{title: 'TOEFL', path: '/toefl'}, 
+		{title: 'Extra Curricular', path: '/extra-curricular'}, 
+		{title: 'College Mentoring', path: '/college-mentoring'}
 	];
 
 	return (
 		<Box sx={{ flexGrow: 1 }}>
 			<AppBar position='fixed'>
 				<Toolbar component='nav'>
-					<Stack direction='row' spacing={2}>
+					<Stack direction='row' spacing={2} alignItems='center' width="100vw">
+                        <Image src={logo} alt='logo' quality={100} width={140} height={50} />
+                        <div style={{flexGrow: 1}}></div>
 						{navbarLinks.map(({ title, path }, i) => (
 							<NextMuiLink
 								key={`${title}${i}`}
@@ -23,7 +27,7 @@ const Navbar = () => {
 								variant='button'
 								sx={{ textDecoration: 'none' }}
 							>
-								<Typography className={navbarStyles.navbarLink}>{title}</Typography>
+								<Typography className={navbarStyles.navbarLink} textTransform="none">{title}</Typography>
 							</NextMuiLink>
 						))}
 					</Stack>
