@@ -6,10 +6,11 @@ import logo from '@public/Pics/logo.png';
 import usePreloadCtx from '@context/PreloadCtx';
 
 const Navbar = () => {
-	const { navbarLinks } = usePreloadCtx();
+	const { navbarLinks, imageArray } = usePreloadCtx();
 
 	return (
 		<Box sx={{ flexGrow: 1 }}>
+            {console.log(imageArray)}
 			<AppBar position='fixed'>
 				<Toolbar component='nav'>
 					<Stack direction='row' spacing={2} alignItems='center' width="100vw">

@@ -6,8 +6,8 @@ declare global {
 		path: string;
 	}
 
-    interface preloadCtxInterface {
-        navbarLinks: navbarLinkProps;
+    type preloadCtxType = {
+        navbarLinks: navbarLinkProps[];
         imageArray: string[];
     }
 }

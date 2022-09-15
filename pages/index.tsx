@@ -1,10 +1,7 @@
-import Banner from '@components/Banner';
 import type { NextPage } from 'next';
 
 const Home: NextPage = () => {
-    return (
-        <Banner />
-    )
+	return <div>l</div>;
 };
 
 export default Home;

@@ -1,14 +1,19 @@
 import axios from 'axios';
-import { AppProps } from 'next/app';
-import { createContext, useContext, useEffect, useState } from 'react';
+import { ScriptProps } from 'next/script';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 
-const preloadCtx = createContext<preloadCtxInterface | null>(null);
+const preloadCtxDefaultValues: preloadCtxType = {
+	navbarLinks: [],
+	imageArray: [],
+};
+
+const preloadCtx = createContext(preloadCtxDefaultValues);
 
 const usePreloadCtx = () => {
 	return useContext(preloadCtx);
 };
 
-const navbarLinks: navbarLinkProps[] = [
+const navbarLinks = [
 	{ title: 'SAT', path: '/sat' },
 	{ title: 'AP', path: '/ap' },
 	{ title: 'TOEFL', path: '/toefl' },
@@ -16,8 +21,8 @@ const navbarLinks: navbarLinkProps[] = [
 	{ title: 'College Mentoring', path: '/college-mentoring' },
 ];
 
-export const PreloadCtxProvider = (props: AppProps) => {
-	const [imageArray, setImageArray] = useState([]);
+export const PreloadCtxProvider = (props: ScriptProps) => {
+	const [imageArray, setImageArray] = useState<string[]>([]);
 
 	useEffect(() => {
 		axios.get('/api/drive').then((res) => {
@@ -27,7 +32,7 @@ export const PreloadCtxProvider = (props: AppProps) => {
 
 	const value = { navbarLinks, imageArray };
 
-    return <preloadCtx.Provider value={value} {...props} />
+	return <preloadCtx.Provider value={value} {...props} />;
 };
 
 export default usePreloadCtx;
