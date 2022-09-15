@@ -9,6 +9,7 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import Navbar from 'components/Navbar';
+import dynamic from 'next/dynamic';
 
 interface MyAppProps extends AppProps {
 	emotionCache?: EmotionCache;
@@ -16,6 +17,14 @@ interface MyAppProps extends AppProps {
 
 const clientSideEmotionCache = createEmotionCache();
 const lightTheme = createTheme(lightThemeOptions);
+
+const PreloadCtxProvider = dynamic(
+	() =>
+		import('@context/PreloadCtx').then(
+			(module) => module.PreloadCtxProvider
+		),
+	{ ssr: false }
+);
 
 const MyApp = (props: MyAppProps) => {
 	const {
@@ -25,15 +34,17 @@ const MyApp = (props: MyAppProps) => {
 	} = props;
 
 	return (
-		<Box sx={{ minWidth: '100vw', minHeight: '100vh'}}>
+		<Box sx={{ minWidth: '100vw', minHeight: '100vh' }}>
 			<CacheProvider value={emotionCache}>
 				<Head>
 					<title>GEMS Academy</title>
 				</Head>
 				<ThemeProvider theme={lightTheme}>
-					<CssBaseline />
-					<Navbar />
-					<Component {...pageProps} />
+					<PreloadCtxProvider>
+						<CssBaseline />
+						<Navbar />
+						<Component {...pageProps} />
+					</PreloadCtxProvider>
 				</ThemeProvider>
 			</CacheProvider>
 		</Box>

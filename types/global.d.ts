@@ -5,4 +5,9 @@ declare global {
 		title: string;
 		path: string;
 	}
+
+    interface preloadCtxInterface {
+        navbarLinks: navbarLinkProps;
+        imageArray: string[];
+    }
 }

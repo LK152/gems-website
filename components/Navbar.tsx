@@ -1,17 +1,12 @@
 import { AppBar, Box, Toolbar, Stack, Typography } from '@mui/material';
 import Image from 'next/image';
-import NextMuiLink from 'components/NextMuiLink';
-import navbarStyles from 'styles/Navbar.module.css';
-import logo from 'public/Pics/logo.png';
+import NextMuiLink from '@components/NextMuiLink';
+import navbarStyles from '@styles/Navbar.module.css';
+import logo from '@public/Pics/logo.png';
+import usePreloadCtx from '@context/PreloadCtx';
 
 const Navbar = () => {
-	const navbarLinks: navbarLinkProps[] = [
-		{title: 'SAT', path: '/sat'}, 
-		{title: 'AP', path: '/ap'}, 
-		{title: 'TOEFL', path: '/toefl'}, 
-		{title: 'Extra Curricular', path: '/extra-curricular'}, 
-		{title: 'College Mentoring', path: '/college-mentoring'}
-	];
+	const { navbarLinks } = usePreloadCtx();
 
 	return (
 		<Box sx={{ flexGrow: 1 }}>
