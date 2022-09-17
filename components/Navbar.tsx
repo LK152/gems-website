@@ -6,16 +6,28 @@ import logo from '@public/Pics/logo.png';
 import usePreloadCtx from '@context/PreloadCtx';
 
 const Navbar = () => {
-	const { navbarLinks, imageArray } = usePreloadCtx();
+	const { navbarLinks } = usePreloadCtx();
 
 	return (
 		<Box sx={{ flexGrow: 1 }}>
-            {console.log(imageArray)}
 			<AppBar position='fixed'>
 				<Toolbar component='nav'>
-					<Stack direction='row' spacing={2} alignItems='center' width="100vw">
-                        <Image src={logo} alt='logo' quality={100} width={140} height={50} />
-                        <div style={{flexGrow: 1}}></div>
+					<Stack
+						direction='row'
+						spacing={2}
+						alignItems='center'
+						width='100vw'
+					>
+						<NextMuiLink href='/' sx={{padding: 2}}>
+							<Image
+								src={logo}
+								alt='logo'
+								quality={100}
+								width={140}
+								height={50}
+							/>
+						</NextMuiLink>
+						<div style={{ flexGrow: 1 }}></div>
 						{navbarLinks.map(({ title, path }, i) => (
 							<NextMuiLink
 								key={`${title}${i}`}
@@ -23,7 +35,12 @@ const Navbar = () => {
 								variant='button'
 								sx={{ textDecoration: 'none' }}
 							>
-								<Typography className={navbarStyles.navbarLink} textTransform="none">{title}</Typography>
+								<Typography
+									className={navbarStyles.navbarLink}
+									textTransform='none'
+								>
+									{title}
+								</Typography>
 							</NextMuiLink>
 						))}
 					</Stack>
