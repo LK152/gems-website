@@ -25,7 +25,7 @@ export const PreloadCtxProvider = (props: ScriptProps) => {
 	const [imageArray, setImageArray] = useState<string[]>([]);
 
 	useEffect(() => {
-		axios.get('/api/drive/slider').then((res) => {
+		axios.get('/api/home/slider').then((res) => {
 			setImageArray(res.data);
 		});
 	}, []);

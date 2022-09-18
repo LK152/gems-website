@@ -27,7 +27,7 @@
 		"next-env.d.ts",
 		"**/*.ts",
 		"**/*.tsx",
-		"pages/api/drive/slider.js",
+		"pages/api/home/slider.js",
 		"utilities/createJWT.js"
 , "components/Slider.jsx"	],
 	"exclude": ["node_modules"]
