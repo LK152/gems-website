@@ -1,7 +1,13 @@
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { CacheProvider, EmotionCache } from '@emotion/react';
-import { ThemeProvider, CssBaseline, createTheme, Box } from '@mui/material';
+import {
+	ThemeProvider,
+	CssBaseline,
+	createTheme,
+	Box,
+	responsiveFontSizes,
+} from '@mui/material';
 import createEmotionCache from 'utilities/createEmotionCache';
 import lightThemeOptions from 'styles/lightThemeOptions';
 import '@fontsource/roboto/300.css';
@@ -16,7 +22,7 @@ interface MyAppProps extends AppProps {
 }
 
 const clientSideEmotionCache = createEmotionCache();
-const lightTheme = createTheme(lightThemeOptions);
+const lightTheme = responsiveFontSizes(createTheme(lightThemeOptions));
 
 const PreloadCtxProvider = dynamic(
 	() =>

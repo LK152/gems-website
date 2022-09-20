@@ -1,14 +1,14 @@
 import { AppBar, Box, Toolbar, Stack, Typography, styled } from '@mui/material';
 import Image from 'next/image';
 import NextMuiLink from '@components/NextMuiLink';
-import navbarStyles from '@styles/Navbar.module.css';
 import logo from '@public/Pics/logo.png';
 import usePreloadCtx from '@context/PreloadCtx';
+import Dropdown from './Dropdown';
 
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
 const Navbar = () => {
-	const { navbarLinks } = usePreloadCtx();
+	const { navbarCtx } = usePreloadCtx();
 
 	return (
 		<Box sx={{ flexGrow: 1 }}>
@@ -26,27 +26,21 @@ const Navbar = () => {
 									src={logo}
 									alt='logo'
 									quality={100}
-                                    width={128}
-                                    height={45} 
+									width={128}
+									height={45}
 								/>
 							</Box>
 						</NextMuiLink>
 						<div style={{ flexGrow: 1 }} />
-						{navbarLinks.map(({ title, path }, i) => (
-							<NextMuiLink
-								key={`${title}${i}`}
-								href={path}
-								variant='button'
-								sx={{ textDecoration: 'none' }}
-							>
-								<Typography
-									className={navbarStyles.navbarLink}
-									textTransform='none'
-								>
-									{title}
-								</Typography>
-							</NextMuiLink>
-						))}
+						{navbarCtx.map(({ title, subItems }, idx) => {
+							return (
+								<Dropdown
+									key={idx}
+									title={title}
+									subItems={subItems}
+								/>
+							);
+						})}
 					</Stack>
 				</Toolbar>
 			</AppBar>

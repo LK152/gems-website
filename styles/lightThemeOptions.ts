@@ -6,6 +6,9 @@ const lightThemeOptions: ThemeOptions = {
 		primary: {
 			main: '#FFF',
 		},
+		secondary: {
+			main: '#000',
+		},
 	},
 	components: {
 		MuiAppBar: {
@@ -16,6 +19,17 @@ const lightThemeOptions: ThemeOptions = {
 				colorPrimary: {
 					backgroundColor: 'transparent',
 				},
+			},
+		},
+		MuiTypography: {
+			defaultProps: {
+				textTransform: 'none',
+				color: 'black',
+			},
+		},
+		MuiButton: {
+			defaultProps: {
+				color: 'secondary',
 			},
 		},
 	},

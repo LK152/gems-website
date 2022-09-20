@@ -1,17 +1,27 @@
 export {};
 
 declare global {
-	type navbarLinkProps = {
+	type navbarCtxProps = {
 		title: string;
-		path: string;
+		subItems: navbarSubItems[];
 	}
+
+    type navbarSubItems = {
+        title: string;
+        path: string;
+    }
 
     type sliderItemProps = {
         id: string;
     }
 
+    type dropdownProps = {
+        title: string;
+        subItems: navbarLinkProps[];
+    }
+
     type preloadCtxType = {
-        navbarLinks: navbarLinkProps[];
+        navbarCtx: navbarCtxProps[];
         imageArray: string[];
     }
 
