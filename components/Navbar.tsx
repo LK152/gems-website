@@ -21,7 +21,7 @@ const Navbar = () => {
 						width='100vw'
 					>
 						<NextMuiLink href='/'>
-							<Box display='block'>
+							<Box display='flex'>
 								<Image
 									src={logo}
 									alt='logo'

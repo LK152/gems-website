@@ -450,10 +450,10 @@
     "minimatch" "^3.1.2"
     "strip-json-comments" "^3.1.1"
 
-"@fontsource/roboto@^4.5.7":
-  "integrity" "sha512-m57UMER23Mk6Drg9OjtHW1Y+0KPGyZfE5XJoPTOsLARLar6013kJj4X2HICt+iFLJqIgTahA/QAvSn9lwF1EEw=="
-  "resolved" "https://registry.npmjs.org/@fontsource/roboto/-/roboto-4.5.7.tgz"
-  "version" "4.5.7"
+"@fontsource/nunito-sans@^4.5.9":
+  "integrity" "sha512-HNKNZKhvcFVOJCmd6RoIYoV1Y4OWFiRlYezDDRYU3kSm+KC8GNYENKJ18vOeHLU4lSDi+ywM8wOy+0XDL1BC1Q=="
+  "resolved" "https://registry.npmjs.org/@fontsource/nunito-sans/-/nunito-sans-4.5.9.tgz"
+  "version" "4.5.9"
 
 "@humanwhocodes/config-array@^0.10.4":
   "integrity" "sha512-mXAIHxZT3Vcpg83opl1wGlVZ9xydbfZO3r5YfRSH6Gpp2J/PfdBP0wbDa2sO6/qRbcalpoevVyW6A/fI6LfeMw=="

@@ -27,8 +27,8 @@ const navbarCtx: navbarCtxProps[] = [
 	{
 		title: 'Subjects',
 		subItems: [
-			{ title: 'English Reading & Writing', path: '/english_rw' },
-			{ title: 'Science & Lab Report', path: '/science_lab-report' },
+			{ title: 'English', path: '/english' },
+			{ title: 'Science', path: '/science' },
 			{ title: 'Math', path: '/math' },
 		],
 	},

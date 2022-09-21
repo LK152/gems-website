@@ -9,7 +9,7 @@ const Dropdown = (props: dropdownProps) => {
 				disableElevation
 				disableFocusRipple
 				disableRipple
-				disableTouchRipple 
+				disableTouchRipple
 			>
 				<Typography>{props.title}</Typography>
 			</Button>
@@ -18,7 +18,11 @@ const Dropdown = (props: dropdownProps) => {
 					return (
 						<li key={idx}>
 							<NextMuiLink href={path}>
-								<Typography noWrap>{title}</Typography>
+								<Button sx={{mx: 2, my: 1}}>
+									<Typography noWrap>
+										{title}
+									</Typography>
+								</Button>
 							</NextMuiLink>
 						</li>
 					);

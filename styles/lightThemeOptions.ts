@@ -12,19 +12,17 @@ const lightThemeOptions: ThemeOptions = {
 	},
 	components: {
 		MuiAppBar: {
-			defaultProps: {
-				elevation: 0,
-			},
 			styleOverrides: {
 				colorPrimary: {
-					backgroundColor: 'transparent',
+					backgroundColor: '#ededed',
 				},
 			},
 		},
 		MuiTypography: {
 			defaultProps: {
 				textTransform: 'none',
-				color: 'black',
+				color: 'black', 
+                fontFamily: 'Nunito Sans',
 			},
 		},
 		MuiButton: {

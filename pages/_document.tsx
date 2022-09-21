@@ -11,7 +11,7 @@ class MyDocument extends Document {
 					{/* eslint-disable-next-line @next/next/no-page-custom-font */}
 					<link
 						rel='stylesheet'
-						href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap'
+						href='https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,500,700&display=swap'
 					/>
 				</Head>
 				<body>

@@ -6,11 +6,11 @@ const Slider = () => {
 	const { imageArray } = usePreloadCtx();
 
 	return (
-		<Carousel height={480} animation='slide' duration={700}>
-			{imageArray.map((id, idx) => {
-				return <ImageItem key={idx} id={id} />;
-			})}
-		</Carousel>
+			<Carousel height={480} animation='slide' duration={700}>
+				{imageArray.map((id, idx) => {
+					return <ImageItem key={idx} id={id} />;
+				})}
+			</Carousel>
 	);
 };
 

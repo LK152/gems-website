@@ -10,11 +10,9 @@ import {
 } from '@mui/material';
 import createEmotionCache from 'utilities/createEmotionCache';
 import lightThemeOptions from 'styles/lightThemeOptions';
-import '@fontsource/roboto/300.css';
-import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/700.css';
-import Navbar from 'components/Navbar';
+import '@fontsource/nunito-sans';
+import Navbar from '@components/Navbar';
+import Footer from '@components/Footer';
 import dynamic from 'next/dynamic';
 
 interface MyAppProps extends AppProps {
@@ -50,6 +48,7 @@ const MyApp = (props: MyAppProps) => {
 						<CssBaseline />
 						<Navbar />
 						<Component {...pageProps} />
+                        <Footer />
 					</PreloadCtxProvider>
 				</ThemeProvider>
 			</CacheProvider>
