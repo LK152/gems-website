@@ -10,3 +10,18 @@
 .navbarLink:hover {
 	opacity: 1;
 }
+
+.dropdown {
+    position: relative;
+    height: fit-content;
+}
+
+.content {
+    display: none;
+    position: absolute;
+    list-style: none;
+}
+
+.dropdown:hover .content {
+    display: block;
+}
