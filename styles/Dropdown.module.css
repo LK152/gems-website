@@ -17,11 +17,22 @@
 }
 
 .content {
-    display: none;
+    margin: 0;
+    padding: 0;
+    max-height: 0;
+    overflow: hidden;
     position: absolute;
     list-style: none;
+    -webkit-transition: max-height 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+	-moz-transition: max-height 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+	-o-transition: max-height 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+    transition: max-height 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
 .dropdown:hover .content {
-    display: block;
+    max-height: 200px;
+    -webkit-transition: max-height 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+	-moz-transition: max-height 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+	-o-transition: max-height 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+    transition: max-height 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
 }

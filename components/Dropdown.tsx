@@ -5,16 +5,21 @@ import NextMuiLink from './NextMuiLink';
 const Dropdown = (props: dropdownProps) => {
 	return (
 		<div className={styles.dropdown}>
-			<Button>
+			<Button
+				disableElevation
+				disableFocusRipple
+				disableRipple
+				disableTouchRipple 
+			>
 				<Typography>{props.title}</Typography>
 			</Button>
 			<ul className={styles.content}>
 				{props.subItems.map(({ title, path }, idx) => {
 					return (
 						<li key={idx}>
-							<a>
-								<Typography>{title}</Typography>
-							</a>
+							<NextMuiLink href={path}>
+								<Typography noWrap>{title}</Typography>
+							</NextMuiLink>
 						</li>
 					);
 				})}
