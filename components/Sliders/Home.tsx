@@ -3,14 +3,14 @@ import usePreloadCtx from '@context/PreloadCtx';
 import ImageItem from './ImageItem';
 
 const Slider = () => {
-	const { imageArray } = usePreloadCtx();
+	const { homeSlider } = usePreloadCtx();
 
 	return (
-			<Carousel height={480} animation='slide' duration={700}>
-				{imageArray.map((id, idx) => {
-					return <ImageItem key={idx} id={id} />;
-				})}
-			</Carousel>
+		<Carousel height={480} animation='slide' duration={700}>
+			{homeSlider.map((id, idx) => {
+				return <ImageItem key={idx} id={id} />;
+			})}
+		</Carousel>
 	);
 };
 

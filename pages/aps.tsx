@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 
-const APS: Nextpage = () => {
-
+const aps: NextPage = () => {
+    return <div></div>
 }
 
-export default APS;
+export default aps;

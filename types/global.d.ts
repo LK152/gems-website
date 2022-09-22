@@ -24,6 +24,7 @@ declare global {
 
 	type preloadCtxType = {
 		navbarCtx: navbarCtxProps[];
-		imageArray: string[];
+		homeSlider: string[];
+        homeGallery: string[];
 	};
 }
