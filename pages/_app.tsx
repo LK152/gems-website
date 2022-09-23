@@ -13,7 +13,7 @@ import lightThemeOptions from 'styles/lightThemeOptions';
 import '@fontsource/nunito-sans';
 import Navbar from '@components/Navbar';
 import Footer from '@components/Footer';
-import dynamic from 'next/dynamic';
+import { PreloadCtxProvider } from '@context/PreloadCtx';
 
 interface MyAppProps extends AppProps {
 	emotionCache?: EmotionCache;
@@ -21,14 +21,6 @@ interface MyAppProps extends AppProps {
 
 const clientSideEmotionCache = createEmotionCache();
 const lightTheme = responsiveFontSizes(createTheme(lightThemeOptions));
-
-const PreloadCtxProvider = dynamic(
-	() =>
-		import('@context/PreloadCtx').then(
-			(module) => module.PreloadCtxProvider
-		),
-	{ ssr: false }
-);
 
 const MyApp = (props: MyAppProps) => {
 	const {
@@ -48,7 +40,7 @@ const MyApp = (props: MyAppProps) => {
 						<CssBaseline />
 						<Navbar />
 						<Component {...pageProps} />
-                        <Footer />
+						<Footer />
 					</PreloadCtxProvider>
 				</ThemeProvider>
 			</CacheProvider>
