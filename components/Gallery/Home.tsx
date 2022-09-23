@@ -11,7 +11,7 @@ const Home = () => {
 				return (
 					<ImageListItem key={idx}>
 						<Image
-							src={`https://drive.google.com/uc?id=${id}`}
+							src={`https://drive.google.com/uc?export=view&id=${id}`}
 							alt='gallery image'
 							layout='fill'
                             objectFit='contain'
