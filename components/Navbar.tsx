@@ -28,6 +28,7 @@ const Navbar = () => {
 									quality={100}
 									width={128}
 									height={45}
+                                    priority
 								/>
 							</Box>
 						</NextMuiLink>

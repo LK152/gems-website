@@ -4,8 +4,6 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 
 const preloadCtxDefaultValues: preloadCtxType = {
 	navbarCtx: [],
-	homeSlider: [],
-	homeGallery: [],
 };
 
 const preloadCtx = createContext(preloadCtxDefaultValues);
@@ -54,24 +52,7 @@ const navbarCtx: navbarCtxProps[] = [
 ];
 
 export const PreloadCtxProvider = (props: ScriptProps) => {
-	const [homeSlider, setHomeSlider] = useState<string[]>([]);
-	const [homeGallery, setHomeGallery] = useState<string[]>([]);
-
-	useEffect(() => {
-		axios
-			.get('/api/drive/images?query=1C9JmIZ5ZqFrxdOMid3H0h70yUhU51RnE')
-			.then((res) => {
-				setHomeSlider(res.data);
-			});
-
-		axios
-			.get('/api/drive/images?query=1Bw7n9K5Z4b7xHfUE4MSW-n6Y8QHuCPzv')
-			.then((res) => {
-				setHomeGallery(res.data);
-			});
-	}, []);
-
-	const value = { navbarCtx, homeSlider, homeGallery };
+	const value = { navbarCtx };
 
 	return <preloadCtx.Provider value={value} {...props} />;
 };

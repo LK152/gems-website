@@ -1,13 +1,10 @@
 import { ImageList, ImageListItem, ImageListItemBar } from '@mui/material';
-import usePreloadCtx from '@context/PreloadCtx';
 import Image from 'next/image';
 
-const Home = () => {
-	const { homeGallery } = usePreloadCtx();
-
+const Home = ({ids}: idArrayProp) => {
 	return (
 		<ImageList sx={{ width: '80vw', minHeight: '1200px', mx: 'auto' }} cols={4}>
-			{homeGallery.map((id, idx) => {
+			{ids.map((id, idx) => {
 				return (
 					<ImageListItem key={idx}>
 						<Image
@@ -16,7 +13,6 @@ const Home = () => {
 							layout='fill'
                             objectFit='contain'
 							quality={100} 
-                            priority
 						/>
                         <ImageListItemBar title={'igem'}  />
 					</ImageListItem>
