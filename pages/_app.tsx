@@ -14,6 +14,7 @@ import '@fontsource/nunito-sans';
 import Navbar from '@components/Navbar';
 import Footer from '@components/Footer';
 import { PreloadCtxProvider } from '@context/PreloadCtx';
+import '@styles/styles.css';
 
 interface MyAppProps extends AppProps {
 	emotionCache?: EmotionCache;

@@ -1,19 +1,13 @@
 import { ImageList, ImageListItem, ImageListItemBar } from '@mui/material';
-import Image from 'next/image';
+import Item from './ImageItem';
 
 const Home = ({ids}: idArrayProp) => {
 	return (
-		<ImageList sx={{ width: '80vw', minHeight: '1200px', mx: 'auto' }} cols={4}>
+		<ImageList sx={{ width: '80vw', minHeight: '1800px', mx: 'auto' }} cols={4}>
 			{ids.map((id, idx) => {
 				return (
 					<ImageListItem key={idx}>
-						<Image
-							src={`https://drive.google.com/uc?export=view&id=${id}`}
-							alt='gallery image'
-							layout='fill'
-                            objectFit='contain'
-							quality={100} 
-						/>
+                        <Item id={id} />
                         <ImageListItemBar title={'igem'}  />
 					</ImageListItem>
 				);

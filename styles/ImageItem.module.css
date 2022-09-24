@@ -1,0 +1,24 @@
+.imgContainer {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.zoominIcon {
+    z-index: 10;
+    opacity: 0;
+}
+
+.imgContainer:hover .zoominIcon {
+    opacity: 1;
+}
+
+.imgContainer:hover {
+    opacity: 0.5;
+    -webkit-transition: opacity 0.2s cubic-bezier(0.25, 0.1, 0.25, 1);
+	-moz-transition: opacity 0.2s cubic-bezier(0.25, 0.1, 0.25, 1);
+	-o-transition: opacity 0.2s cubic-bezier(0.25, 0.1, 0.25, 1);
+	transition: opacity 0.2s cubic-bezier(0.25, 0.1, 0.25, 1);
+}

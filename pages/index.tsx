@@ -4,13 +4,12 @@ import Gallery from '@components/Gallery/Home';
 import { google } from 'googleapis';
 import auth from '@utilities/createJWT';
 
-const Home: NextPage<{ sliderId: string[]; galleryId: [] }> = ({
+const Home: NextPage<{ sliderId: string[]; galleryId: string[] }> = ({
 	sliderId,
 	galleryId,
 }) => {
 	return (
 		<>
-        {console.log(sliderId)}
 			<Slider ids={sliderId} />
 			<Gallery ids={galleryId} />
 		</>

@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { ScriptProps } from 'next/script';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
