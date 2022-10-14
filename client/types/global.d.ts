@@ -11,7 +11,7 @@ declare global {
         id: string;
     }
 
-	type navbarCtxProps = {
+	type navbarPathsProps = {
 		title: string;
 		subItems: navbarSubItems[];
 	};

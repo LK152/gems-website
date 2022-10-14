@@ -13,7 +13,6 @@ import lightThemeOptions from 'styles/lightThemeOptions';
 import '@fontsource/nunito-sans';
 import Navbar from '@components/Navbar';
 import Footer from '@components/Footer';
-import { PreloadCtxProvider } from '@context/PreloadCtx';
 import '@styles/styles.css';
 
 interface MyAppProps extends AppProps {
@@ -37,12 +36,10 @@ const MyApp = (props: MyAppProps) => {
 					<title>GEMS Academy</title>
 				</Head>
 				<ThemeProvider theme={lightTheme}>
-					<PreloadCtxProvider>
-						<CssBaseline />
-						<Navbar />
-						<Component {...pageProps} />
-						<Footer />
-					</PreloadCtxProvider>
+					<CssBaseline />
+					<Navbar />
+					<Component {...pageProps} />
+					<Footer />
 				</ThemeProvider>
 			</CacheProvider>
 		</Box>
