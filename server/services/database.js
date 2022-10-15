@@ -1,6 +1,10 @@
 const mysql = require('mysql');
-const createImagePathsTable =
-	'CREATE TABLE IF NOT EXISTS imagePaths (fileName varchar(100) NOT NULL, originalName varchar(100) NOT NULL, mimeType varchar(100) NOT NULL, path varchar(100) NOT NULL, size int NOT NULL, UNIQUE(fileName, path))';
+const fs = require('fs');
+const path = require('path');
+const createImagePathsTable = fs.readFileSync(
+	path.join(__dirname, './sql/imagePathsTable.sql'),
+	'utf8'
+);
 
 const conn = mysql.createConnection({
 	host: 'localhost',

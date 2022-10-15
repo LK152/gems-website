@@ -1,7 +1,7 @@
 import { AppBar, Box, Toolbar, Stack, Typography, styled } from '@mui/material';
 import Image from 'next/image';
 import NextMuiLink from '@components/NextMuiLink';
-import logo from '@public/Pics/logo.png';
+import logo from '@public/favicon.ico';
 import Dropdown from './Dropdown';
 
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
@@ -45,7 +45,7 @@ export const navbarPaths: navbarPathsProps[] = [
 	},
 ];
 
-const Navbar = () => {
+const Navbar: React.FC = () => {
 	return (
 		<Box sx={{ flexGrow: 1 }}>
 			<AppBar position='fixed'>

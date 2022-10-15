@@ -4,7 +4,7 @@ import { Button, Modal, Box } from '@mui/material';
 import { ZoomIn } from '@mui/icons-material';
 import styles from '@styles/ImageItem.module.css';
 
-const Item = ({ id }: idProp) => {
+const Item: React.FC<{ path: string }> = ({ path }) => {
 	const [open, setOpen] = useState<boolean>(false);
 	const handleOpen = () => {
 		setOpen(true);
@@ -20,7 +20,7 @@ const Item = ({ id }: idProp) => {
 					style={{
 						width: '100%',
 						height: '100%',
-						background: `url(https://drive.google.com/uc?export=view&id=${id})`,
+						background: `url(https://drive.google.com/uc?export=view&id=${path})`,
 						backgroundSize: 'contain',
 						backgroundRepeat: 'no-repeat',
 						backgroundPosition: 'center',
@@ -34,7 +34,7 @@ const Item = ({ id }: idProp) => {
 				<Box
 					sx={{
 						width: '55vw',
-                        height: '80vh', 
+						height: '80vh',
 						position: 'absolute',
 						top: '50%',
 						left: '50%',
@@ -43,7 +43,7 @@ const Item = ({ id }: idProp) => {
 				>
 					<Image
 						alt='gallery image'
-						src={`https://drive.google.com/uc?export=view&id=${id}`}
+						src={`https://drive.google.com/uc?export=view&id=${path}`}
 						objectFit='contain'
 						layout='fill'
 						quality={100}

@@ -1,12 +1,15 @@
-const AppError = require('../utils/appError');
-const conn = require('../services/database');
+const AppError = require('../../utils/appError');
+const conn = require('../../services/database');
+const fs = require('fs');
+const path = require('path');
+const { v4: uuidv4 } = require('uuid');
 
 const sqlQueries = {
-	list: 'SELECT * FROM imagePaths',
-	get: 'SELECT * FROM imagePaths WHERE fileName=?',
-	post: 'INSERT INTO imagePaths (fileName, originalName, mimeType, path, size) VALUES',
-	patch: 'UPDATE imagePaths SET path=? WHERE id=?',
-	delete: 'DELETE FROM imagePaths WHERE id=?',
+	list: fs.readFileSync(path.join(__dirname, './sql/list.sql'), 'utf8'),
+	get: fs.readFileSync(path.join(__dirname, './sql/get.sql'), 'utf8'),
+	post: fs.readFileSync(path.join(__dirname, './sql/post.sql'), 'utf8'),
+	patch: fs.readFileSync(path.join(__dirname, './sql/patch.sql'), 'utf8'),
+	delete: fs.readFileSync(path.join(__dirname, './sql/delete.sql'), 'utf8'),
 };
 
 exports.getAllPaths = (req, res, next) => {
@@ -26,13 +29,17 @@ exports.createImagePath = (req, res, next) => {
 	console.log(req);
 	if (!req.files) return next(new AppError('No image(s) included', 404));
 
-	const payload = req.files.map(
-		({ filename, originalname, mimetype, path, size }) =>
-			`(${filename}, ${originalname}, ${mimetype}, ${path}, ${size})`
-	);
+	const payload = req.files.map(({ filename, mimetype, path, size }) => [
+		uuidv4(),
+		req.params.id,
+		filename,
+		mimetype,
+		path,
+		size,
+	]);
 	console.log(payload);
 
-	conn.query(sqlQueries.post + payload, (err, data, fields) => {
+	conn.query(sqlQueries.post, [payload], (err, data, fields) => {
 		if (err) return next(new AppError(err, 500));
 
 		res.status(201).json({

@@ -1,16 +1,16 @@
-const express = require('express')
+const express = require('express');
 const router = express.Router();
-const imageControllers = require('../controllers/imageUploads');
+const fs = require('fs');
+const imageControllers = require('../controllers/images/imageUploads');
 const multer = require('multer');
 const storage = multer.diskStorage({
 	destination: (req, file, cb) => {
-		cb(null, './uploads/');
+		const path = `uploads/${req.params?.id}/`;
+		fs.mkdirSync(path, { recursive: true });
+		cb(null, path);
 	},
 	filename: (req, file, cb) => {
-		cb(
-			null,
-			`${new Date().toISOString().split('T')[0]}-${file.originalname}`
-		);
+		cb(null, file.originalname);
 	},
 });
 const fileFilter = (req, file, cb) => {
@@ -26,14 +26,12 @@ const upload = multer({
 	fileFilter: fileFilter,
 });
 
-router
-	.route('/')
-	.get(imageControllers.getAllPaths)
-	.post(upload.array('image'), imageControllers.createImagePath);
+router.get('/', imageControllers.getAllPaths);
 
 router
 	.route('/:id')
 	.get(imageControllers.getImagePath)
+	.post(upload.array('image'), imageControllers.createImagePath)
 	.patch(imageControllers.updateImagePath)
 	.delete(imageControllers.deleteImagePath);
 

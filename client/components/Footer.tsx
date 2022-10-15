@@ -2,7 +2,7 @@ import { Box, Stack, Typography } from '@mui/material';
 import NextMuiLink from './NextMuiLink';
 import { navbarPaths } from './Navbar';
 
-const Footer = () => {
+const Footer: React.FC = () => {
 	return (
 		<Box
 			component='footer'

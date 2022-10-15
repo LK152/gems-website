@@ -1,0 +1,1 @@
+DELETE FROM imagePaths WHERE originalName=?

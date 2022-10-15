@@ -2,7 +2,7 @@ import { Button, Typography } from '@mui/material';
 import styles from '@styles/Dropdown.module.css';
 import NextMuiLink from './NextMuiLink';
 
-const Dropdown = (props: dropdownProps) => {
+const Dropdown: React.FC<dropdownProps> = (props) => {
 	return (
 		<div className={styles.dropdown}>
 			<Button
@@ -18,10 +18,8 @@ const Dropdown = (props: dropdownProps) => {
 					return (
 						<li key={idx}>
 							<NextMuiLink href={path}>
-								<Button sx={{mx: 2, my: 1}}>
-									<Typography noWrap>
-										{title}
-									</Typography>
+								<Button sx={{ mx: 2, my: 1 }}>
+									<Typography noWrap>{title}</Typography>
 								</Button>
 							</NextMuiLink>
 						</li>

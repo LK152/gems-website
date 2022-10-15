@@ -3,14 +3,15 @@ import { drive_v3 } from 'googleapis';
 export {};
 
 declare global {
-    type idArrayProp = {
-        ids: string[];
-    }
-
-    type idProp = {
-        id: string;
-    }
-
+	type imageProps = {
+		id: string;
+		folder: string;
+		fileName: string;
+		mimeType: string;
+		path: string;
+		size: number;
+	};
+    
 	type navbarPathsProps = {
 		title: string;
 		subItems: navbarSubItems[];
