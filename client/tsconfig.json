@@ -1,6 +1,6 @@
 {
 	"compilerOptions": {
-		"target": "es5",
+		"target": "ES6",
 		"lib": ["dom", "dom.iterable", "esnext"],
 		"allowJs": true,
 		"skipLibCheck": true,
@@ -20,15 +20,10 @@
 			"@context/*": ["context/*"],
 			"@utilities/*": ["utilities/*"],
 			"@styles/*": ["styles/*"],
-			"@public/*": ["public/*"]
+			"@public/*": ["public/*"],
+			"@config/*": ["config/*"]
 		}
 	},
-	"include": [
-		"next-env.d.ts",
-		"**/*.ts",
-		"**/*.tsx",
-		"pages/api/home/slider.js",
-		"utilities/createJWT.js"
-, "components/Slider.jsx"	],
+	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
 	"exclude": ["node_modules"]
 }
