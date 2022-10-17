@@ -20,13 +20,10 @@ const Item: React.FC<{ path: string }> = ({ path }) => {
 					style={{
 						width: '100%',
 						height: '100%',
-						background: `url(https://drive.google.com/uc?export=view&id=${path})`,
-						backgroundSize: 'contain',
-						backgroundRepeat: 'no-repeat',
-						backgroundPosition: 'center',
 					}}
 					onClick={handleOpen}
 				>
+					<Image alt='gallery image' src={path} layout='fill' />
 					<ZoomIn fontSize='large' className={styles.zoominIcon} />
 				</Button>
 			</div>
@@ -43,7 +40,7 @@ const Item: React.FC<{ path: string }> = ({ path }) => {
 				>
 					<Image
 						alt='gallery image'
-						src={`https://drive.google.com/uc?export=view&id=${path}`}
+						src={path}
 						objectFit='contain'
 						layout='fill'
 						quality={100}

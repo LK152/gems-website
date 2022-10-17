@@ -11,16 +11,21 @@ datasource db {
 }
 
 model image {
-    id       String @id @default(uuid())
-    fileName String @unique
+    id       String    @id @default(uuid())
+    fileName String    @unique
     mimeType String
     size     Int
     path     String
-    folder   folder @relation(fields: [folderId], references: [id], onDelete: Cascade)
-    folderId String
+    folder   folder    @relation(fields: [folderId], references: [id], onDelete: Cascade)
+    folderId folderIds
 }
 
 model folder {
-    id     String  @id
+    id     folderIds @id
     images image[]
+}
+
+enum folderIds {
+    homeSlider
+    homeGallery
 }

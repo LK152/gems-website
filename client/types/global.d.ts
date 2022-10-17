@@ -11,7 +11,7 @@ declare global {
 		path: string;
 		size: number;
 	};
-    
+
 	type navbarPathsProps = {
 		title: string;
 		subItems: navbarSubItems[];
