@@ -1,12 +1,22 @@
-import conn from '@config/mysql';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { PrismaClient } from '@prisma/client';
+import prisma from '@config/prisma';
+import nextConnect from 'next-connect';
 
-const prisma = new PrismaClient();
+const listApi = nextConnect<NextApiRequest, NextApiResponse>({
+	onError: (err, req, res) => res.status(501).send(err.message),
+	onNoMatch: (req, res) =>
+		res.status(405).send(`Method ${req.method} not allowed`),
+});
 
-//eslint-disable-next-line
-export default async (req: NextApiRequest, res: NextApiResponse) => {
-	const response = await prisma.folder.findMany()
+listApi.get(async (req: NextApiRequest, res: NextApiResponse) => {
+	await prisma.image
+		.findMany()
+		.then((data) => {
+			res.status(200).send(data);
+		})
+		.catch((err) => {
+			res.status(400).send(err);
+		});
+});
 
-    res.status(200).send(response)
-};
+export default listApi;

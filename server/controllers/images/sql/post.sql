@@ -1,1 +1,0 @@
-INSERT IGNORE INTO imagePaths (id, folder, fileName, mimeType, path, size) VALUES ?

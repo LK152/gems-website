@@ -1,15 +1,13 @@
 -- CreateTable
 CREATE TABLE `image` (
     `id` VARCHAR(191) NOT NULL,
-    `originalName` VARCHAR(191) NOT NULL,
+    `fileName` VARCHAR(191) NOT NULL,
     `mimeType` VARCHAR(191) NOT NULL,
     `size` INTEGER NOT NULL,
-    `destination` VARCHAR(191) NOT NULL,
-    `fileName` VARCHAR(191) NOT NULL,
     `path` VARCHAR(191) NOT NULL,
     `folderId` VARCHAR(191) NOT NULL,
 
-    UNIQUE INDEX `image_originalName_key`(`originalName`),
+    UNIQUE INDEX `image_fileName_key`(`fileName`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 

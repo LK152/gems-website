@@ -1,7 +1,7 @@
 import { AppBar, Box, Toolbar, Stack, Typography, styled } from '@mui/material';
 import Image from 'next/image';
 import NextMuiLink from '@components/NextMuiLink';
-import logo from '@public/favicon.ico';
+import logo from '@public/logo.png';
 import Dropdown from './Dropdown';
 
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);

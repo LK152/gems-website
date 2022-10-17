@@ -2,9 +2,7 @@ import multer, { FileFilterCallback } from 'multer';
 import { NextApiRequest, NextApiResponse } from 'next';
 import nextConnect from 'next-connect';
 import fs from 'fs';
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import prisma from '@config/prisma';
 
 const storage: multer.StorageEngine = multer.diskStorage({
 	destination: (req: Express.Request, file: Express.Multer.File, cb) => {
@@ -36,22 +34,65 @@ const upload: multer.Multer = multer({
 
 interface multerReq extends NextApiRequest {
 	files: Express.Multer.File[];
+	body: {
+		folder: string;
+	};
 }
 
-const apiRoute = nextConnect<multerReq, NextApiResponse>({
+const createApi = nextConnect<multerReq, NextApiResponse>({
 	onError: (err, req, res) => res.status(501).send(err.message),
 	onNoMatch: (req, res) =>
 		res.status(405).send(`Method ${req.method} not allowed`),
 });
 
-apiRoute.use(upload.array('image'));
+createApi.use(upload.array('image'));
 
-apiRoute.post(async (req, res) => {
+createApi.post(async (req, res) => {
+	if (!req.body.folder) res.status(400).send('Bad request');
+	console.log(req.files);
 
-	res.status(200).send('Success');
+	const payload = req?.files.map(({ filename, mimetype, size, path }) => {
+		return {
+			fileName: filename,
+			mimeType: mimetype,
+			size: size,
+			path: path,
+		};
+	});
+
+	await prisma.folder
+		.upsert({
+			where: {
+				id: req.body?.folder,
+			},
+			update: {
+				id: req.body?.folder,
+				images: {
+					createMany: {
+						data: payload,
+						skipDuplicates: true,
+					},
+				},
+			},
+			create: {
+				id: req.body?.folder,
+				images: {
+					createMany: {
+						data: payload,
+						skipDuplicates: true,
+					},
+				},
+			},
+		})
+		.then(() => {
+			res.status(201).send('Data record created');
+		})
+		.catch(() => {
+			res.status(400).send('Bad request');
+		});
 });
 
-export default apiRoute;
+export default createApi;
 
 export const config = {
 	api: {

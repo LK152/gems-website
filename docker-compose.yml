@@ -15,23 +15,6 @@ services:
       - db:/var/lib/mysql
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
 
-  api:
-    container_name: paths_api
-    depends_on:
-      - db
-    ports:
-      - 8000:8000
-    environment:
-      DB_HOST: db
-      DB_PORT: 3306
-      DB_USER: root
-      DB_PASSWORD: gems2022
-      DB_NAME: paths
-    links: 
-      - db
-    volumes:
-      - ./:/src
-
 volumes:
   db:
     driver: local

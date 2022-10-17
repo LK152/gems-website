@@ -5,7 +5,7 @@ export {};
 declare global {
 	type imageProps = {
 		id: string;
-		folder: string;
+		folderId: string;
 		fileName: string;
 		mimeType: string;
 		path: string;
