@@ -10,8 +10,11 @@ import {
 	ListItemText,
 	ListItemButton,
 	Typography,
+	Toolbar,
 } from '@mui/material';
-import { ExpandLess, ExpandMore } from '@mui/icons-material';
+import { KeyboardArrowDown, Home } from '@mui/icons-material';
+
+const drawerWidth = '260px';
 
 const sidebarProps = {
 	pages: {
@@ -34,20 +37,53 @@ const Sidebar = () => {
 
 	return (
 		<Box>
-			<Drawer sx={{ width: '260px' }} variant='permanent'>
-				<Divider textAlign='left'>Images</Divider>
+			<Drawer
+				sx={{
+					width: drawerWidth,
+					flexShrink: 0,
+					'& .MuiDrawer-paper': {
+						width: drawerWidth,
+						boxSizing: 'border-box',
+					},
+				}}
+				variant='permanent'
+			>
+				<Toolbar />
+				<div>
+					<Divider textAlign='left'>
+						<Typography variant='body2'>Images</Typography>
+					</Divider>
+				</div>
 				<List>
 					<ListItemButton onClick={handleClick} id='home'>
+						<ListItemIcon>
+							<Home />
+						</ListItemIcon>
 						<ListItemText primary='Home' />
-						{home ? <ExpandLess /> : <ExpandMore />}
+						{home ? (
+							<KeyboardArrowDown
+								sx={{
+									transform: 'rotateX(180deg)',
+									transition:
+										'transform .2s cubic-bezier(0.25, 0.1, 0.25, 1)',
+								}}
+							/>
+						) : (
+							<KeyboardArrowDown
+								sx={{
+									transition:
+										'transform .2s cubic-bezier(0.25, 0.1, 0.25, 1)',
+								}}
+							/>
+						)}
 					</ListItemButton>
 					<Collapse in={home} unmountOnExit>
 						<List>
 							{pages.home.map((title, idx) => {
 								return (
-									<ListItem key={idx}>
-										<Typography>{title}</Typography>
-									</ListItem>
+									<ListItemButton sx={{ pl: 10 }} key={idx}>
+										<ListItemText primary={title} />
+									</ListItemButton>
 								);
 							})}
 						</List>
