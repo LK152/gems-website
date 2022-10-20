@@ -7,7 +7,7 @@ const Home: React.FC = () => {
 	const [paths, setPaths] = useState<string[]>([]);
 
 	useEffect(() => {
-		getAsyncApi('images/get/folder/homeGallery').then(
+		getAsyncApi('public/images/get/folder/homeGallery').then(
 			(data: imageProps[]) => {
 				setPaths(
 					data.map(({ path }) =>

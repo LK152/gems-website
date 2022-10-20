@@ -7,7 +7,7 @@ const Slider: React.FC = () => {
 	const [paths, setPaths] = useState<string[]>([]);
 
 	useEffect(() => {
-		getAsyncApi('images/get/folder/homeSlider').then((data: imageProps[]) =>
+		getAsyncApi('public/images/get/folder/homeSlider').then((data: imageProps[]) =>
 			setPaths(
 				data.map(({ path }) =>
 					path.replaceAll('\\', '/').replace('public', '')
