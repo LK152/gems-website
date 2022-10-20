@@ -1,7 +1,7 @@
-import { ImageList, ImageListItem, ImageListItemBar } from '@mui/material';
-import Item from './ImageItem';
+import { Box, Grid } from '@mui/material';
 import getAsyncApi from '@utilities/getAsyncApi';
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 
 const Home: React.FC = () => {
 	const [paths, setPaths] = useState<string[]>([]);
@@ -18,20 +18,7 @@ const Home: React.FC = () => {
 		);
 	}, []);
 
-	return (
-		<ImageList
-			sx={{ width: '80vw', minHeight: '1800px', mx: 'auto' }}
-			cols={4}
-		>
-			{paths.map((path, idx) => {
-				return (
-					<ImageListItem key={idx}>
-						<Item path={path} />
-					</ImageListItem>
-				);
-			})}
-		</ImageList>
-	);
+	return <Box width='100vw' height='100vh'></Box>;
 };
 
 export default Home;
