@@ -12,27 +12,80 @@ import {
 	Typography,
 	Toolbar,
 } from '@mui/material';
-import { KeyboardArrowDown, Home } from '@mui/icons-material';
+import { KeyboardArrowRight, Pages } from '@mui/icons-material';
+import { Link } from 'react-router-dom';
+
+type initStatesType = {
+	about: boolean;
+	subjects: boolean;
+	standardizedTest: boolean;
+	extraCurriculums: boolean;
+};
 
 const drawerWidth = '260px';
 
 const sidebarProps = {
-	pages: {
-		home: ['Slider Images', 'Gallery Images'],
-	},
+	pages: [
+		{
+			id: 'about',
+			title: 'About',
+			subItems: [
+				{ title: 'Contact Us', path: '/contact-us' },
+				{ title: 'Teacher Introduction', path: '/teacher-intro' },
+				{ title: 'Press Room', path: '/press-room' },
+				{ title: 'Awards', path: '/awards' },
+				{ title: 'Career', path: '/career' },
+			],
+		},
+		{
+			id: 'subjects',
+			title: 'Subjects',
+			subItems: [
+				{ title: 'English', path: '/english' },
+				{ title: 'Science', path: '/science' },
+				{ title: 'Math', path: '/math' },
+			],
+		},
+		{
+			id: 'standardizedTest',
+			title: 'Standardized Tests',
+			subItems: [
+				{ title: 'SAT', path: '/sat' },
+				{ title: 'TOEFL', path: '/toefl' },
+				{ title: 'APs', path: '/aps' },
+			],
+		},
+		{
+			id: 'extraCurriculums',
+			title: 'Extra Curriculums',
+			subItems: [
+				{ title: 'IGEM', path: '/igem' },
+				{ title: 'The Earth Prize', path: '/the-earth-prize' },
+				{ title: 'AI For Good', path: '/ai-for-good' },
+				{ title: 'Podcast Club', path: '/podcast-club' },
+				{ title: 'Policy Debate', path: '/policy-debate' },
+			],
+		},
+	],
 };
 
-const openInitStates = {
-	home: false,
+const initStates: initStatesType = {
+	about: false,
+	subjects: false,
+	standardizedTest: false,
+	extraCurriculums: false,
 };
 
 const Sidebar = () => {
-	const [open, setOpen] = useState(openInitStates);
-	const { home } = open;
+	const [states, setStates] = useState(initStates);
 	const { pages } = sidebarProps;
 
 	const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-		setOpen((prev) => ({ ...prev, [e.currentTarget.id]: !home }));
+		setStates((prev) => ({
+			...prev,
+			[e.currentTarget.id]:
+				!prev[e.currentTarget.id as keyof initStatesType],
+		}));
 	};
 
 	return (
@@ -51,43 +104,68 @@ const Sidebar = () => {
 				<Toolbar />
 				<div>
 					<Divider textAlign='left'>
-						<Typography variant='body2'>Images</Typography>
+						<Typography variant='overline'>Pages</Typography>
 					</Divider>
 				</div>
 				<List>
-					<ListItemButton onClick={handleClick} id='home'>
-						<ListItemIcon>
-							<Home />
-						</ListItemIcon>
+					<ListItemButton component={Link} to='/'>
 						<ListItemText primary='Home' />
-						{home ? (
-							<KeyboardArrowDown
-								sx={{
-									transform: 'rotateX(180deg)',
-									transition:
-										'transform .2s cubic-bezier(0.25, 0.1, 0.25, 1)',
-								}}
-							/>
-						) : (
-							<KeyboardArrowDown
-								sx={{
-									transition:
-										'transform .2s cubic-bezier(0.25, 0.1, 0.25, 1)',
-								}}
-							/>
-						)}
 					</ListItemButton>
-					<Collapse in={home} unmountOnExit>
-						<List>
-							{pages.home.map((title, idx) => {
-								return (
-									<ListItemButton sx={{ pl: 10 }} key={idx}>
-										<ListItemText primary={title} />
-									</ListItemButton>
-								);
-							})}
-						</List>
-					</Collapse>
+					{pages.map(({ id, title, subItems }, idx) => {
+						return (
+							<>
+								<ListItemButton
+									onClick={handleClick}
+									id={id}
+									key={idx}
+								>
+									<ListItemText primary={title} />
+									<ListItemIcon>
+										{states[id as keyof initStatesType] ? (
+											<KeyboardArrowRight
+												sx={{
+													transform: 'rotate(90deg)',
+													transition:
+														'transform .2s cubic-bezier(0.25, 0.1, 0.25, 1)',
+												}}
+											/>
+										) : (
+											<KeyboardArrowRight
+												sx={{
+													transition:
+														'transform .2s cubic-bezier(0.25, 0.1, 0.25, 1)',
+												}}
+											/>
+										)}
+									</ListItemIcon>
+								</ListItemButton>
+								<Collapse
+									in={states[id as keyof initStatesType]}
+									unmountOnExit
+									key={idx}
+								>
+									<List>
+										{subItems.map(
+											({ title, path }, idx) => {
+												return (
+													<ListItemButton
+														sx={{ pl: 4 }}
+														component={Link}
+														to={path}
+														key={idx}
+													>
+														<ListItemText
+															primary={title}
+														/>
+													</ListItemButton>
+												);
+											}
+										)}
+									</List>
+								</Collapse>
+							</>
+						);
+					})}
 				</List>
 			</Drawer>
 		</Box>
