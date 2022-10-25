@@ -12,7 +12,7 @@ const upload = multer({
 
 const router = express.Router();
 
-router.get('/:id', async (req, res) => {
+router.get('/folder/:id', async (req, res) => {
 	try {
 		await prisma.image
 			.findMany({ where: { folderId: req.query?.id } })
@@ -27,48 +27,79 @@ router.get('/:id', async (req, res) => {
 	}
 });
 
-router.post('/:id', validateFolderId, upload.array('image'), async (req, res) => {
-	console.log(req.files);
-	try {
-		const payload = req.files?.map(({ filename, mimetype, size, path }) => {
-			return {
-				fileName: filename,
-				mimeType: mimetype,
-				size: size,
-				path: path,
-			};
-		});
+router.post(
+	'/:id',
+	validateFolderId,
+	upload.array('image'),
+	async (req, res) => {
+		console.log(req.files);
+		try {
+			const payload = req.files?.map(
+				({ filename, mimetype, size, path }) => {
+					return {
+						fileName: filename,
+						mimeType: mimetype,
+						size: size,
+						path: path,
+					};
+				}
+			);
 
-		await prisma.folder
-			.upsert({
-				where: { id: req.params?.id },
-				update: {
-					id: req.params?.id,
-					images: {
-						createMany: {
-							data: payload,
-							skipDuplicates: true,
+			await prisma.folder
+				.upsert({
+					where: { id: req.params?.id },
+					update: {
+						id: req.params?.id,
+						images: {
+							createMany: {
+								data: payload,
+								skipDuplicates: true,
+							},
 						},
 					},
-				},
-				create: {
-					id: req.params?.id,
-					images: {
-						createMany: {
-							data: payload,
-							skipDuplicates: true,
+					create: {
+						id: req.params?.id,
+						images: {
+							createMany: {
+								data: payload,
+								skipDuplicates: true,
+							},
 						},
 					},
-				},
-			})
+				})
+				.then(() => {
+					res.status(201).send('Data record created');
+				})
+				.catch(() => {
+					res.status(400).send('Bad request');
+				});
+		} catch (err) {
+			res.status(400).send(err);
+		}
+	}
+);
+
+router.delete('/id', async (req, res) => {
+	try {
+		await prisma.image
+			.delete({ where: { id: req.params?.id } })
 			.then(() => {
-				res.status(201).send('Data record created');
-			})
-			.catch(() => {
-				res.status(400).send('Bad request');
+				res.status(200).send('Data record deleted');
 			});
 	} catch (err) {
-		res.status(400).send(err);
+		res.status(400).send('Bad request');
+	}
+});
+
+router.delete('/folder/:id', async (req, res) => {
+	try {
+		await prisma.folder
+			.delete({ where: { id: req.params?.id } })
+			.then(() => {
+				res.status(200).send('Data folder deleted');
+			});
+	} catch (err) {
+		res.status(400).send('Bad request');
 	}
 });
 

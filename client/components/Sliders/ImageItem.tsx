@@ -5,7 +5,7 @@ const Item: React.FC<{ path: string }> = ({ path }) => {
 		<div style={{ position: 'relative', width: '100%', height: '100%' }}>
 			<Image
 				alt='slider image'
-				src={path}
+				src={`/${path}`}
 				layout='fill'
 				objectFit='contain'
 				quality={100}
