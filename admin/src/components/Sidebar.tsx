@@ -149,7 +149,7 @@ const Sidebar = () => {
 											({ title, path }, idx) => {
 												return (
 													<ListItemButton
-														sx={{ pl: 4 }}
+														sx={{ pl: 6 }}
 														component={Link}
 														to={path}
 														key={idx}
