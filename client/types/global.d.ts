@@ -1,6 +1,4 @@
-import { drive_v3 } from 'googleapis';
-
-export {};
+export = {};
 
 declare global {
 	type imageProps = {

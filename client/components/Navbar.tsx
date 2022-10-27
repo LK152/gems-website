@@ -46,7 +46,7 @@ export const navbarPaths: navbarPathsProps[] = [
 
 const Navbar: React.FC = () => {
 	return (
-		<Box sx={{ flexGrow: 1 }}>
+		<Box flexGrow={1}>
 			<AppBar position='fixed'>
 				<Toolbar component='nav' sx={{ minHeight: '72px' }}>
 					<Stack
