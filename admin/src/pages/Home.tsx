@@ -6,16 +6,17 @@ import { useEffect, useState } from 'react';
 import getAsyncApi from '../utilities/getAsyncApi';
 
 const Home = () => {
-	const [items, setItems] = useState<draggableItemProps[]>([]);
+	const [items, setItems] = useState<imageProps[]>([]);
 
 	useEffect(() => {
 		getAsyncApi('http://localhost:8000/images/folder/homeSlider').then(
 			(data: imageProps[]) => {
 				setItems(
-					data.map(({ id, path }) => {
+					data.map(({ id, path, order }) => {
 						return {
 							id: id,
 							path: path.replaceAll('\\', '/'),
+							order: order,
 						};
 					})
 				);
@@ -33,7 +34,11 @@ const Home = () => {
 
 	return (
 		<Box>
-			<DraggableList items={items} onDragEnd={onDragEnd} />
+			<DraggableList
+				items={items}
+				onDragEnd={onDragEnd}
+				setItems={setItems}
+			/>
 		</Box>
 	);
 };

@@ -14,11 +14,13 @@ model image {
     id       String    @id @default(uuid())
     fileName String    @unique
     mimeType String
-    size     Int
     path     String
+    size     Int
     order    Int       @unique
     folder   folder    @relation(fields: [folderId], references: [id], onDelete: Cascade)
     folderId folderIds
+
+    @@index([folderId])
 }
 
 model folder {

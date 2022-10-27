@@ -3,8 +3,8 @@ const fs = require('fs');
 
 exports.fileStorage = multer.diskStorage({
 	destination: (req, file, cb) => {
-		if (!fs.existsSync('uploads/')) fs.mkdirSync('uploads/');
-		cb(null, 'uploads/');
+		if (!fs.existsSync('public/images/')) fs.mkdirSync('public/images/');
+		cb(null, 'public/images/');
 	},
 	filename: (req, file, cb) => {
 		cb(null, file.originalname);

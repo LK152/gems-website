@@ -1,13 +1,14 @@
 import { OnDragEndResponder } from 'react-beautiful-dnd';
 
 declare global {
-    type imageProps = {
+	type imageProps = {
 		id: string;
-		folderId: string;
-		fileName: string;
-		mimeType: string;
+		folderId?: string;
+		fileName?: string;
+		mimeType?: string;
 		path: string;
-		size: number;
+		size?: number;
+		order: number;
 	};
 
 	type contextProps = {
@@ -35,17 +36,14 @@ declare global {
 	};
 
 	type draggableListProps = {
-		items: draggableItemProps[];
+		items: imageProps[];
 		onDragEnd: OnDragEndResponder;
+		setItems: React.Dispatch<React.SetStateAction<imageProps[]>>;
 	};
 
-    type draggableListItemProps = {
-        item: draggableItemProps;
-        index: number;
-    }
-
-    type draggableItemProps = {
-        id: string;
-        path: string;
-    }
+	type draggableListItemProps = {
+		item: imageProps;
+		index: number;
+		setItems: React.Dispatch<React.SetStateAction<imageProps[]>>;
+	};
 }
