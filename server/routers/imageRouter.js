@@ -13,6 +13,11 @@ const upload = multer({
 
 const router = express.Router();
 
+const removeFile = (err) => {
+	if (err) console.log('unlink failed', err);
+	else console.log('file deleted');
+};
+
 router.get('/', async (req, res) => {
 	try {
 		await prisma.image
@@ -30,6 +35,8 @@ router.get('/', async (req, res) => {
 
 router.get('/folder/:id', validateFolderId, async (req, res) => {
 	try {
+		if (!req.params.id) throw new Error('No id specified');
+
 		await prisma.image
 			.findMany({
 				where: { folderId: req.params.id },
@@ -51,8 +58,9 @@ router.post(
 	validateFolderId,
 	upload.array('image'),
 	async (req, res) => {
-        console.log(req.body)
 		try {
+			if (!req.params.id) throw new Error('No id specified');
+
 			let orderCount = 0;
 
 			await prisma.image
@@ -113,6 +121,8 @@ router.post(
 
 router.patch('/:id', async (req, res) => {
 	try {
+		if (!req.params.id) throw new Error('No id specified');
+
 		await prisma.image;
 	} catch (err) {
 		res.status(400).send(err);
@@ -121,29 +131,44 @@ router.patch('/:id', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
 	try {
+		if (!req.params.id) throw new Error('No id specified');
+
 		await prisma.image
 			.findUnique({ where: { id: req.params.id } })
 			.then((image) => {
-				fs.unlinkSync(image.path);
+				fs.unlink(image.path);
 			});
 
 		await prisma.image.delete({ where: { id: req.params.id } }).then(() => {
 			res.status(200).send('Data record deleted');
 		});
 	} catch (err) {
-		res.status(400).send('Bad request');
+		res.status(400).send(err);
 	}
 });
 
 router.delete('/folder/:id', async (req, res) => {
 	try {
+		if (!req.params.id) throw new Error('No id specified');
+
+		await prisma.image
+			.findMany({
+				where: { folderId: req.params.id },
+				select: { path: true },
+			})
+			.then((paths) => {
+				paths.forEach((item) => {
+					fs.unlink(item.path, removeFile);
+				});
+			});
+
 		await prisma.folder
-			.delete({ where: { id: req.params?.id } })
+			.delete({ where: { id: req.params.id } })
 			.then(() => {
 				res.status(200).send('Data folder deleted');
 			});
 	} catch (err) {
-		res.status(400).send('Bad request');
+		res.status(400).send(err);
 	}
 });
 

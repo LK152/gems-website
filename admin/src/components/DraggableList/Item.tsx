@@ -37,7 +37,7 @@ const Item = ({ item, index, setItems }: draggableListItemProps) => {
 					{...provided.draggableProps}
 					{...provided.dragHandleProps}
 					elevation={4}
-					sx={{ height: 'fit-content' }}
+					sx={{ minWidth: '20%', height: 'fit-content' }}
 				>
 					<img
 						src={`http://localhost:8000/${item.path}`}

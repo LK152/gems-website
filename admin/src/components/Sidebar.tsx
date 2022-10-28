@@ -14,7 +14,6 @@ import {
 } from '@mui/material';
 import { KeyboardArrowRight } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
-import { v4 as uuidv4 } from 'uuid';
 import useCommonContext from '../context/commonContext';
 
 type initStatesType = {
@@ -37,11 +36,11 @@ const Sidebar = () => {
 	const { pages } = sidebarProps;
 
 	const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-		setStates((prev) => ({
-			...prev,
+		setStates({
+			...states,
 			[e.currentTarget.id]:
-				!prev[e.currentTarget.id as keyof initStatesType],
-		}));
+				!states[e.currentTarget.id as keyof initStatesType],
+		});
 	};
 
 	return (
@@ -69,7 +68,7 @@ const Sidebar = () => {
 					</ListItemButton>
 					{pages.map(({ id, title, subItems }) => {
 						return (
-							<div key={uuidv4()}>
+							<div key={id}>
 								<ListItemButton onClick={handleClick} id={id}>
 									<ListItemText primary={title} />
 									{states[id as keyof initStatesType] ? (
@@ -93,14 +92,14 @@ const Sidebar = () => {
 									in={states[id as keyof initStatesType]}
 									unmountOnExit
 								>
-									<List>
+									<List component='div' disablePadding>
 										{subItems.map(({ title, path }) => {
 											return (
 												<ListItemButton
 													sx={{ pl: 6 }}
 													component={Link}
 													to={path}
-													key={uuidv4()}
+													key={title}
 												>
 													<ListItemText
 														primary={title}
