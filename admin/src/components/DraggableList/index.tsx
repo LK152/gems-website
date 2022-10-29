@@ -151,6 +151,9 @@ const Index = ({ items, onDragEnd, setItems }: draggableListProps) => {
 					/>
 				</DialogContent>
 				<DialogActions>
+					<Button onClick={handleUpload} disabled={!files}>
+						Confirm
+					</Button>
 					<Button
 						onClick={() => {
 							setOpen(false);
@@ -158,9 +161,6 @@ const Index = ({ items, onDragEnd, setItems }: draggableListProps) => {
 						}}
 					>
 						Cancel
-					</Button>
-					<Button onClick={handleUpload} disabled={!files}>
-						Confirm
 					</Button>
 				</DialogActions>
 			</Dialog>
@@ -171,8 +171,8 @@ const Index = ({ items, onDragEnd, setItems }: draggableListProps) => {
 					contents?
 				</DialogContent>
 				<DialogActions>
-					<Button onClick={() => setBulkOpen(false)}>No</Button>
 					<Button onClick={handleBulkDelete}>Yes</Button>
+					<Button onClick={() => setBulkOpen(false)}>No</Button>
 				</DialogActions>
 			</Dialog>
 		</>
