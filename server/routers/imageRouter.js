@@ -124,6 +124,17 @@ router.patch('/:id', async (req, res) => {
 	}
 });
 
+router.delete('/', async (req, res) => {
+	try {
+		await prisma.folder.deleteMany().then(() => {
+			fs.rmSync('public/images', { recursive: true, force: true });
+			res.status(200).send('Bulk deleted');
+		});
+	} catch (err) {
+		res.status(400).send(err);
+	}
+});
+
 router.delete('/:id', async (req, res) => {
 	try {
 		if (!req.params.id) throw new Error('No id specified');

@@ -13,6 +13,7 @@ const Slider = ({ images }: { images: imageProps[] | null }) => {
 						src={`http://localhost:8000/${path}`}
 						layout='fill'
 						objectFit='contain'
+                        quality={100}
 						priority
 					/>
 				</Box>
