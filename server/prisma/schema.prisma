@@ -16,7 +16,7 @@ model image {
     mimeType String
     path     String
     size     Int
-    order    Int       @unique
+    order    Int
     folder   folder    @relation(fields: [folderId], references: [id], onDelete: Cascade)
     folderId folderIds
 

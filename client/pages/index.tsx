@@ -1,24 +1,35 @@
 import type { NextPage } from 'next';
 import Slider from '@components/Slider';
 import Gallery from '@components/Gallery';
-import { useEffect, useState, use } from 'react';
+import { useEffect, useState } from 'react';
 
-const fetchImages = async () => {
-	const res = await fetch('http://localhost:8000/images', {
-		cache: 'force-cache',
-	});
+const fetchFolderImages = async (folder: string) => {
+	const res = await fetch(`http://localhost:8000/images/folder/${folder}`);
 
 	return res.json();
 };
 
 const Home: NextPage = () => {
-	const [images, setImages] = useState<imageProps[] | null>(null);
-    const res = use(fetchImages())
-    console.log(res)
+	const [sliderImages, setSliderImages] = useState<imageProps[] | null>(null);
+	const [galleryImages, setGalleryImages] = useState<imageProps[] | null>(
+		null
+	);
+
+	useEffect(() => {
+		fetchFolderImages('homeSlider').then((res: imageProps[]) => {
+			setSliderImages(res.length != 0 ? res : null);
+		});
+
+		fetchFolderImages('homeGallery').then((res: imageProps[]) => {
+			setGalleryImages(res.length != 0 ? res : null);
+		});
+	}, []);
+    console.log(sliderImages)
 
 	return (
 		<>
-			<Slider images={images} />
+			{sliderImages && <Slider images={sliderImages} />}
+			{galleryImages && <Gallery images={galleryImages} />}
 		</>
 	);
 };

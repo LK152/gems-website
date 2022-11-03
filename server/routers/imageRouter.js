@@ -61,17 +61,12 @@ router.post(
 		try {
 			if (!req.params.id) throw new Error('No id specified');
 
-			let orderCount = 0;
+			const id = req.params.id;
 
-			await prisma.image
-				.count({
-					where: {
-						folderId: req.params.id,
-					},
-				})
-				.then((count) => {
-					orderCount = count;
-				});
+			const orderCount = await prisma.image.count({
+				where: { folderId: id },
+			});
+			console.log(orderCount);
 
 			const payload = req.files?.map(
 				({ filename, mimetype, size, path }, idx) => {
@@ -87,9 +82,9 @@ router.post(
 
 			await prisma.folder
 				.upsert({
-					where: { id: req.params.id },
+					where: { id: id },
 					update: {
-						id: req.params.id,
+						id: id,
 						images: {
 							createMany: {
 								data: payload,
@@ -98,7 +93,7 @@ router.post(
 						},
 					},
 					create: {
-						id: req.params.id,
+						id: id,
 						images: {
 							createMany: {
 								data: payload,
