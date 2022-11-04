@@ -1,4 +1,4 @@
-import { OnDragEndResponder } from 'react-beautiful-dnd';
+export = {};
 
 declare global {
 	type imageProps = {
@@ -33,17 +33,5 @@ declare global {
 	type subPages = {
 		title: string;
 		path: string;
-	};
-
-	type draggableListProps = {
-		items: imageProps[];
-		onDragEnd: OnDragEndResponder;
-		setItems: React.Dispatch<React.SetStateAction<imageProps[]>>;
-	};
-
-	type draggableListItemProps = {
-		item: imageProps;
-		index: number;
-		setItems: React.Dispatch<React.SetStateAction<imageProps[]>>;
 	};
 }

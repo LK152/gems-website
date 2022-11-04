@@ -1,44 +1,30 @@
-import DraggableList from '../components/DraggableList';
-import { Box } from '@mui/material';
-import { DropResult } from 'react-beautiful-dnd';
-import reorder from '../utilities/reorder';
+import { Box, Stack } from '@mui/material';
 import { useEffect, useState } from 'react';
-import getAsyncApi from '../utilities/getAsyncApi';
+import ImageList from '../components/ImageList';
+
+const fetchFolder = async (folder: string) => {
+	const res = await fetch(`http://localhost:8000/images/folder/${folder}`);
+
+	return res.json();
+};
 
 const Home = () => {
-	const [items, setItems] = useState<imageProps[]>([]);
+	const [sliderImages, setSliderImages] = useState<imageProps[] | null>(null);
+	const [galleryImages, setGalleryImages] = useState<imageProps[] | null>(
+		null
+	);
 
 	useEffect(() => {
-		getAsyncApi('http://localhost:8000/images/folder/homeSlider').then(
-			(data: imageProps[]) => {
-				setItems(
-					data.map(({ id, path, order }) => {
-						return {
-							id: id,
-							path: path.replaceAll('\\', '/'),
-							order: order,
-						};
-					})
-				);
-			}
-		);
+		fetchFolder('homeSlider').then((images) => setSliderImages(images));
+		fetchFolder('homeGallery').then((images) => setGalleryImages(images));
 	}, []);
 
-	const onDragEnd = ({ destination, source }: DropResult) => {
-		if (!destination) return;
-
-		const newItems = reorder(items, source.index, destination.index);
-
-		setItems(newItems);
-	};
-
 	return (
-		<Box>
-			<DraggableList
-				items={items}
-				onDragEnd={onDragEnd}
-				setItems={setItems}
-			/>
+		<Box width='100%'>
+			<Stack direction='column'>
+				<ImageList images={sliderImages} />
+				<ImageList images={galleryImages} />
+			</Stack>
 		</Box>
 	);
 };
