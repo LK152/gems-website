@@ -11,7 +11,7 @@ datasource db {
 }
 
 model image {
-    id       String    @id @default(uuid())
+    id       String    @id @unique @default(uuid())
     fileName String    @unique
     mimeType String
     path     String

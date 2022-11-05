@@ -37,9 +37,11 @@ router.get('/folder/:id', validateFolderId, async (req, res) => {
 	try {
 		if (!req.params.id) throw new Error('No id specified');
 
+		const id = req.params.id;
+
 		await prisma.image
 			.findMany({
-				where: { folderId: req.params.id },
+				where: { folderId: id },
 				orderBy: { order: 'asc' },
 			})
 			.then((data) => {
@@ -139,13 +141,19 @@ router.delete('/:id', async (req, res) => {
 	try {
 		if (!req.params.id) throw new Error('No id specified');
 
+		const id = req.params.id;
+		console.log(id);
+
 		await prisma.image
-			.findUnique({ where: { id: req.params.id } })
-			.then((image) => {
-				fs.unlink(image.path);
+			.findUnique({
+				where: { id: id },
+				select: { path: true },
+			})
+			.then(({ path }) => {
+				fs.unlinkSync(path);
 			});
 
-		await prisma.image.delete({ where: { id: req.params.id } }).then(() => {
+		await prisma.image.delete({ where: { id: id } }).then(() => {
 			res.status(200).send('Data record deleted');
 		});
 	} catch (err) {
@@ -157,22 +165,22 @@ router.delete('/folder/:id', async (req, res) => {
 	try {
 		if (!req.params.id) throw new Error('No id specified');
 
+		const id = req.params.id;
+
 		await prisma.image
 			.findMany({
-				where: { folderId: req.params.id },
+				where: { folderId: id },
 				select: { path: true },
 			})
 			.then((paths) => {
-				paths.forEach((item) => {
-					fs.unlink(item.path, removeFile);
+				paths.forEach(({ path }) => {
+					fs.unlink(path, removeFile);
 				});
 			});
 
-		await prisma.folder
-			.delete({ where: { id: req.params.id } })
-			.then(() => {
-				res.status(200).send('Data folder deleted');
-			});
+		await prisma.folder.delete({ where: { id: id } }).then(() => {
+			res.status(200).send('Data folder deleted');
+		});
 	} catch (err) {
 		res.status(400).send(err);
 	}
