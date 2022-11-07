@@ -13,11 +13,6 @@ const upload = multer({
 
 const router = express.Router();
 
-const removeFile = (err) => {
-	if (err) console.log('unlink failed', err);
-	else console.log('file deleted');
-};
-
 router.get('/', async (req, res) => {
 	try {
 		await prisma.image
@@ -87,7 +82,6 @@ router.post(
 			const orderCount = await prisma.image.count({
 				where: { folderId: id },
 			});
-			console.log(orderCount);
 
 			const payload = req.files?.map(
 				({ filename, mimetype, size, path }, idx) => {
@@ -161,7 +155,6 @@ router.delete('/:id', async (req, res) => {
 		if (!req.params.id) throw new Error('No id specified');
 
 		const id = req.params.id;
-		console.log(id);
 
 		await prisma.image
 			.findUnique({
@@ -193,7 +186,7 @@ router.delete('/folder/:id', async (req, res) => {
 			})
 			.then((paths) => {
 				paths.forEach(({ path }) => {
-					fs.unlink(path, removeFile);
+					fs.unlinkSync(path);
 				});
 			});
 

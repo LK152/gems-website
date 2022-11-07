@@ -1,4 +1,4 @@
-import { Box, Button, Stack, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { useEffect, useState } from 'react';
 import ImageList from '../components/ImageList';
 import { folderIds } from '../types/global';

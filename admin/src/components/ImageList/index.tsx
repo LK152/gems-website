@@ -1,26 +1,19 @@
-import {
-	Delete,
-	DeleteSweep,
-	KeyboardArrowLeft,
-	KeyboardArrowRight,
-	Upload,
-} from '@mui/icons-material';
+import { DeleteSweep, Update, Upload } from '@mui/icons-material';
 import { memo, useState } from 'react';
 import {
 	Box,
 	Button,
-	Card,
-	CardActions,
-	CardContent,
-	CardMedia,
-	IconButton,
 	Paper,
 	Stack,
 	Typography,
+	Dialog,
+	DialogActions,
+	DialogTitle,
 } from '@mui/material';
 import UploadFileDialog from '../UploadFileDialog';
 import { folderIds } from '../../types/global';
 import { fetchFolder, postImages, deleteImage, deleteFolder } from '../../api';
+import CardItem from './CardItem';
 
 type props = {
 	id: folderIds;
@@ -29,24 +22,36 @@ type props = {
 	setImages: React.Dispatch<React.SetStateAction<imageProps[] | null>>;
 };
 
-const ImageList = ({ id, title, images, setImages }: props) => {
-	const [dialogOpen, setDialogOpen] = useState<boolean>(false);
-	const [uploads, setUploads] = useState<File[] | null>(null);
+const deletes: imageProps[] = [];
 
-	console.log(uploads);
+const ImageList = ({ id, title, images, setImages }: props) => {
+	const [uploadOpen, setUploadOpen] = useState<boolean>(false); // Upload dialog open state
+	const [bulkOpen, setBulkOpen] = useState<boolean>(false); // Bulk delete dialog open state
+	const [change, setChange] = useState<boolean>(false); // Update change flag
+	const [uploads, setUploads] = useState<File[] | null>(null); // Image uploads
+
+	console.log(images, deletes);
+
+	const handleUpdate = () => {
+		deletes.forEach(({ id }) => deleteImage(id));
+	};
 
 	const handleDeleteImage = (
 		e: React.MouseEvent<HTMLButtonElement, MouseEvent>
 	) => {
-		if (images)
-			setImages(images?.filter(({ id }) => id !== e.currentTarget.id));
+		if (images) {
+			const item = images.find(({ id }) => id === e.currentTarget.id);
 
-		deleteImage(e.currentTarget.id);
+			if (item) deletes.push(item);
+			setImages(images.filter(({ id }) => id !== e.currentTarget.id));
+			setChange(true);
+		}
 	};
 
 	const handleBulkDelete = () => {
 		deleteFolder(id).then(() => {
-			if (images) setImages(null);
+			setImages(null);
+			setBulkOpen(false);
 		});
 	};
 
@@ -57,87 +62,83 @@ const ImageList = ({ id, title, images, setImages }: props) => {
 
 		postImages(fd, id).then(async () => {
 			setUploads(null);
-			setDialogOpen(false);
+			setUploadOpen(false);
 			setImages(await fetchFolder(id));
 		});
 	};
 
 	return (
 		<>
-			<Box width='80%' mx='auto' my={4}>
-				<Typography variant='h3'>{title}</Typography>
-				<Paper variant='outlined'>
-					{images && images.length !== 0 ? (
-						<Stack
-							direction='row'
-							alignItems='center'
-							sx={{ overflowX: 'scroll' }}
-						>
-							{images?.map(({ id, path, order }, idx) => (
-								<Card
-									sx={{
-										minWidth: '300px',
-										height: 'fit-content',
-										mx: 4,
-									}}
-									key={idx}
-								>
-									<CardMedia
-										component='img'
-										image={`http://localhost:8000/${path}`}
-										alt='slider'
+			<Box
+				width='80%'
+				height={images && images.length !== 0 ? 700 : 'auto'}
+				mx='auto'
+				my={4}
+			>
+				<Stack
+					height='100%'
+					direction='column'
+					justifyContent='space-between'
+				>
+					<Typography variant='h3'>{title}</Typography>
+					<Paper variant='outlined'>
+						{images && images.length !== 0 ? (
+							<Stack
+								direction='row'
+								alignItems='center'
+								sx={{ overflowX: 'scroll' }}
+							>
+								{images?.map(({ id, path, order }, idx) => (
+									<CardItem
+										id={id}
+										imgPath={path}
+										key={idx}
+										order={order}
+										handleDelete={handleDeleteImage}
 									/>
-									<CardContent>
-										<Typography>{`Order: ${
-											order + 1
-										}`}</Typography>
-									</CardContent>
-									<CardActions>
-										<Stack
-											width='100%'
-											direction='row'
-											justifyContent='space-between'
-										>
-											<IconButton>
-												<KeyboardArrowLeft />
-											</IconButton>
-											<IconButton
-												id={id}
-												onClick={handleDeleteImage}
-											>
-												<Delete />
-											</IconButton>
-											<IconButton>
-												<KeyboardArrowRight />
-											</IconButton>
-										</Stack>
-									</CardActions>
-								</Card>
-							))}
-						</Stack>
-					) : (
-						<Typography textAlign='center' m={10}>
-							No items in list
-						</Typography>
-					)}
-				</Paper>
-				<Stack my={1} direction='row' justifyContent='space-between'>
-					<Button onClick={() => setDialogOpen(true)}>
-						<Upload />
-						<Typography>Upload File(s)</Typography>
-					</Button>
-					<Button onClick={handleBulkDelete}>
-						<DeleteSweep />
-						<Typography textAlign='center'>Bulk Delete</Typography>
-					</Button>
+								))}
+							</Stack>
+						) : (
+							<Typography textAlign='center' m={10}>
+								No items in list
+							</Typography>
+						)}
+					</Paper>
+					<Stack
+						my={1}
+						direction='row'
+						justifyContent='space-between'
+					>
+						<Button onClick={() => setUploadOpen(true)}>
+							<Upload />
+							<Typography>Upload File(s)</Typography>
+						</Button>
+						<Button onClick={handleUpdate} disabled={!change}>
+							<Update />
+							<Typography>Update</Typography>
+						</Button>
+						<Button onClick={() => setBulkOpen(true)}>
+							<DeleteSweep />
+							<Typography textAlign='center'>
+								Bulk Delete
+							</Typography>
+						</Button>
+					</Stack>
 				</Stack>
 			</Box>
 			<UploadFileDialog
-				open={dialogOpen}
-				handleClose={() => setDialogOpen(false)}
+				open={uploadOpen}
+				handleClose={() => setUploadOpen(false)}
 				handleChange={(files: File[]) => setUploads(files)}
 				handleUpload={handleUpload}
 			/>
+			<Dialog open={bulkOpen} onClose={() => setBulkOpen(false)}>
+				<DialogTitle>Confirm to delete all images</DialogTitle>
+				<DialogActions>
+					<Button onClick={handleBulkDelete}>Confirm</Button>
+					<Button onClick={() => setBulkOpen(false)}>Cancel</Button>
+				</DialogActions>
+			</Dialog>
 		</>
 	);
 };
