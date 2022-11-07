@@ -1,4 +1,7 @@
-export = {};
+export enum folderIds {
+	homeSlider = 'homeSlider',
+	homeGallery = 'homeGallery',
+}
 
 declare global {
 	type imageProps = {

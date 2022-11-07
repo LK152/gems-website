@@ -33,6 +33,25 @@ router.get('/', async (req, res) => {
 	}
 });
 
+router.get('/:id', async (req, res) => {
+	try {
+		if (!req.params.id) throw new Error('No id specified');
+
+		const id = req.params.id;
+
+		await prisma.image
+			.findUnique({
+				where: { id: id },
+			})
+			.then((image) => res.status(200).send(image))
+			.catch(() => {
+				res.status(400).send('Bad request');
+			});
+	} catch (err) {
+		res.status(400).send(err);
+	}
+});
+
 router.get('/folder/:id', validateFolderId, async (req, res) => {
 	try {
 		if (!req.params.id) throw new Error('No id specified');

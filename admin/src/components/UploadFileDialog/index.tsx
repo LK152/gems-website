@@ -22,9 +22,7 @@ type props = {
 	open: boolean;
 	handleClose: () => void;
 	handleChange: (file: File[]) => void;
-	handleUpload: (
-		e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-	) => Promise<void>;
+	handleUpload: () => void;
 };
 
 const UploadFileDialog = ({
@@ -38,7 +36,6 @@ const UploadFileDialog = ({
 			open={open}
 			TransitionComponent={transition}
 			onClose={handleClose}
-			keepMounted
 		>
 			<DialogTitle>
 				<Typography>Upload File(s)</Typography>
