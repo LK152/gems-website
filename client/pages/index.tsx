@@ -3,27 +3,32 @@ import Slider from '@components/Slider';
 import Gallery from '@components/Gallery';
 import { useEffect, useState } from 'react';
 
-const fetchFolderImages = async (folder: string) => {
-	const res = await fetch(`http://localhost:8000/images/folder/${folder}`);
+export const getStaticProps = async () => {
+	const slider = await (
+		await fetch('http://localhost:8000/images/folder/homeSlider')
+	).json();
+	const gallery = await (
+		await fetch('http://localhost:8000/images/folder/homeGallery')
+	).json();
 
-	return res.json();
+	return { props: { slider, gallery } };
 };
 
-const Home: NextPage = () => {
+type props = {
+	slider: imageProps[];
+	gallery: imageProps[];
+};
+
+const Home: NextPage<props> = ({ slider, gallery }) => {
 	const [sliderImages, setSliderImages] = useState<imageProps[] | null>(null);
 	const [galleryImages, setGalleryImages] = useState<imageProps[] | null>(
 		null
 	);
 
 	useEffect(() => {
-		fetchFolderImages('homeSlider').then((res: imageProps[]) => {
-			setSliderImages(res.length != 0 ? res : null);
-		});
-
-		fetchFolderImages('homeGallery').then((res: imageProps[]) => {
-			setGalleryImages(res.length != 0 ? res : null);
-		});
-	}, []);
+		setSliderImages(slider);
+		setGalleryImages(gallery);
+	}, [slider, gallery]);
 
 	return (
 		<>

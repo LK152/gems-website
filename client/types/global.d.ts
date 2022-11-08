@@ -28,19 +28,4 @@ declare global {
 	type preloadCtxType = {
 		navbarCtx: navbarCtxProps[];
 	};
-
-	enum imageActionType {
-		slider = 'slider',
-		gallery = 'gallery',
-	}
-
-	interface imageAction {
-		type: imageActionType;
-		payload: imageProps[] | null;
-	}
-
-	interface imageState {
-		slider: imageProps[] | null;
-		gallery: imageProps[] | null;
-	}
 }

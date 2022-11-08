@@ -20,6 +20,7 @@ const transition = forwardRef(
 
 type props = {
 	open: boolean;
+	disabled: boolean;
 	handleClose: () => void;
 	handleChange: (file: File[]) => void;
 	handleUpload: () => void;
@@ -27,6 +28,7 @@ type props = {
 
 const UploadFileDialog = ({
 	open,
+	disabled,
 	handleClose,
 	handleChange,
 	handleUpload,
@@ -49,7 +51,7 @@ const UploadFileDialog = ({
 				/>
 			</DialogContent>
 			<DialogActions>
-				<Button onClick={handleUpload}>
+				<Button onClick={handleUpload} disabled={disabled}>
 					<Typography>Upload</Typography>
 				</Button>
 				<Button onClick={handleClose}>

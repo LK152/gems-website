@@ -204,6 +204,7 @@ const ImageList = ({ id, title, images, setImages }: props) => {
 			</Box>
 			<UploadFileDialog
 				open={uploadOpen}
+				disabled={!uploads || uploads?.length === 0}
 				handleClose={() => setUploadOpen(false)}
 				handleChange={(files: File[]) => setUploads(files)}
 				handleUpload={handleUpload}
