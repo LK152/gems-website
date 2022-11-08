@@ -1,5 +1,5 @@
 import { DeleteSweep, Update, Upload } from '@mui/icons-material';
-import { memo, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import {
 	Box,
 	Button,
@@ -12,7 +12,13 @@ import {
 } from '@mui/material';
 import UploadFileDialog from '../UploadFileDialog';
 import { folderIds } from '../../types/global';
-import { fetchFolder, postImages, deleteImage, deleteFolder } from '../../api';
+import {
+	fetchFolder,
+	postImages,
+	deleteImage,
+	deleteFolder,
+	patchImages,
+} from '../../api';
 import CardItem from './CardItem';
 
 type props = {
@@ -25,32 +31,45 @@ type props = {
 const deletes: imageProps[] = [];
 
 const ImageList = ({ id, title, images, setImages }: props) => {
+	const [newImages, setNewImages] = useState<imageProps[] | null>(null); // New image array
 	const [uploadOpen, setUploadOpen] = useState<boolean>(false); // Upload dialog open state
 	const [bulkOpen, setBulkOpen] = useState<boolean>(false); // Bulk delete dialog open state
-	const [change, setChange] = useState<boolean>(false); // Update change flag
 	const [uploads, setUploads] = useState<File[] | null>(null); // Image uploads
 
-	console.log(images, deletes);
+	useEffect(() => setNewImages(images), [images]);
+
+	console.log(newImages, deletes);
 
 	const handleUpdate = () => {
 		deletes.forEach(({ id }) => deleteImage(id));
+		patchImages(newImages).then(() => setImages(newImages));
 	};
 
 	const handleDeleteImage = (
 		e: React.MouseEvent<HTMLButtonElement, MouseEvent>
 	) => {
-		if (images) {
-			const item = images.find(({ id }) => id === e.currentTarget.id);
+		if (newImages) {
+			const itemIdx = newImages.findIndex(
+				({ id }) => id === e.currentTarget.id
+			);
 
-			if (item) deletes.push(item);
-			setImages(images.filter(({ id }) => id !== e.currentTarget.id));
-			setChange(true);
+			deletes.push(newImages[itemIdx]);
+			setNewImages(
+				newImages
+					.filter(({ id }) => id !== e.currentTarget.id)
+					.map((image, idx) =>
+						idx >= itemIdx
+							? { ...image, order: image.order - 1 }
+							: image
+					)
+			);
 		}
 	};
 
 	const handleBulkDelete = () => {
 		deleteFolder(id).then(() => {
 			setImages(null);
+			setNewImages(null);
 			setBulkOpen(false);
 		});
 	};
@@ -63,18 +82,73 @@ const ImageList = ({ id, title, images, setImages }: props) => {
 		postImages(fd, id).then(async () => {
 			setUploads(null);
 			setUploadOpen(false);
-			setImages(await fetchFolder(id));
+			setNewImages(await fetchFolder(id));
 		});
+	};
+
+	const handleLeftShift = (
+		e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+	) => {
+		const currIdx = newImages?.findIndex(
+			({ id }) => id === e.currentTarget.id
+		);
+
+		if (newImages && currIdx !== undefined)
+			setNewImages(
+				newImages
+					.map((image, idx) => {
+						if (currIdx) {
+							if (idx === currIdx)
+								return { ...image, order: image.order - 1 };
+							else if (idx === currIdx - 1)
+								return { ...image, order: image.order + 1 };
+							else return image;
+						} else {
+							if (idx === currIdx)
+								return {
+									...image,
+									order: newImages.slice(-1)[0].order,
+								};
+							else return { ...image, order: image.order - 1 };
+						}
+					})
+					.sort((a, b) => a.order - b.order)
+			);
+	};
+
+	const handleRightShift = (
+		e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+	) => {
+		const currIdx = newImages?.findIndex(
+			({ id }) => id === e.currentTarget.id
+		);
+
+		if (newImages && currIdx !== undefined)
+			setNewImages(
+				newImages
+					.map((image, idx) => {
+						if (currIdx !== newImages.slice(-1)[0].order) {
+							if (idx === currIdx)
+								return { ...image, order: image.order + 1 };
+							else if (idx === currIdx + 1)
+								return { ...image, order: image.order - 1 };
+							else return image;
+						} else {
+							if (idx === currIdx)
+								return {
+									...image,
+									order: newImages.slice(0)[0].order,
+								};
+							else return { ...image, order: image.order + 1 };
+						}
+					})
+					.sort((a, b) => a.order - b.order)
+			);
 	};
 
 	return (
 		<>
-			<Box
-				width='80%'
-				height={images && images.length !== 0 ? 700 : 'auto'}
-				mx='auto'
-				my={4}
-			>
+			<Box width='80%' mx='auto' my={4}>
 				<Stack
 					height='100%'
 					direction='column'
@@ -82,19 +156,19 @@ const ImageList = ({ id, title, images, setImages }: props) => {
 				>
 					<Typography variant='h3'>{title}</Typography>
 					<Paper variant='outlined'>
-						{images && images.length !== 0 ? (
+						{newImages && newImages.length !== 0 ? (
 							<Stack
 								direction='row'
 								alignItems='center'
 								sx={{ overflowX: 'scroll' }}
 							>
-								{images?.map(({ id, path, order }, idx) => (
+								{newImages?.map((image, idx) => (
 									<CardItem
-										id={id}
-										imgPath={path}
 										key={idx}
-										order={order}
+										image={image}
 										handleDelete={handleDeleteImage}
+										handleLeftShift={handleLeftShift}
+										handleRightShift={handleRightShift}
 									/>
 								))}
 							</Stack>
@@ -104,16 +178,18 @@ const ImageList = ({ id, title, images, setImages }: props) => {
 							</Typography>
 						)}
 					</Paper>
-					<Stack
-						my={1}
-						direction='row'
-						justifyContent='space-between'
-					>
+					<Stack direction='row' justifyContent='space-between'>
 						<Button onClick={() => setUploadOpen(true)}>
 							<Upload />
 							<Typography>Upload File(s)</Typography>
 						</Button>
-						<Button onClick={handleUpdate} disabled={!change}>
+						<Button
+							onClick={handleUpdate}
+							disabled={
+								JSON.stringify(newImages) ===
+								JSON.stringify(images)
+							}
+						>
 							<Update />
 							<Typography>Update</Typography>
 						</Button>
@@ -133,7 +209,7 @@ const ImageList = ({ id, title, images, setImages }: props) => {
 				handleUpload={handleUpload}
 			/>
 			<Dialog open={bulkOpen} onClose={() => setBulkOpen(false)}>
-				<DialogTitle>Confirm to delete all images</DialogTitle>
+				<DialogTitle>Confirm to delete all newImages</DialogTitle>
 				<DialogActions>
 					<Button onClick={handleBulkDelete}>Confirm</Button>
 					<Button onClick={() => setBulkOpen(false)}>Cancel</Button>

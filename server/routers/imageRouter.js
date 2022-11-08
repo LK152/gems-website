@@ -70,7 +70,7 @@ router.get('/folder/:id', validateFolderId, async (req, res) => {
 });
 
 router.post(
-	'/:id',
+	'/folder/:id',
 	validateFolderId,
 	upload.array('image'),
 	async (req, res) => {
@@ -129,11 +129,19 @@ router.post(
 	}
 );
 
-router.patch('/:id', async (req, res) => {
+router.patch('/', async (req, res) => {
 	try {
-		if (!req.params.id) throw new Error('No id specified');
+		if (!req.body) throw new Error('No body');
 
-		await prisma.image;
+		req.body?.forEach(async (item) => {
+			await prisma.image
+				.update({ where: { id: item.id }, data: { order: item.order } })
+				.catch(() => {
+					res.status(400).send('Bad request');
+				});
+		});
+
+		res.status(201).send('Data record patched');
 	} catch (err) {
 		res.status(400).send(err);
 	}

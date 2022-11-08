@@ -24,12 +24,11 @@ const Home: NextPage = () => {
 			setGalleryImages(res.length != 0 ? res : null);
 		});
 	}, []);
-    console.log(sliderImages)
 
 	return (
 		<>
-			{sliderImages && <Slider images={sliderImages} />}
-			{galleryImages && <Gallery images={galleryImages} />}
+			<Slider images={sliderImages} />
+			<Gallery images={galleryImages} />
 		</>
 	);
 };

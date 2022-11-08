@@ -15,23 +15,28 @@ import {
 } from '@mui/icons-material';
 
 type props = {
-	imgPath: string;
-	order: number;
-	id: string;
+	image: imageProps;
 	handleDelete: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+	handleLeftShift: any;
+	handleRightShift: any;
 };
 
-const CardItem = ({ imgPath, order, id, handleDelete }: props) => {
+const CardItem = ({
+	image,
+	handleDelete,
+	handleLeftShift,
+	handleRightShift,
+}: props) => {
 	return (
 		<Box minWidth={300} maxWidth={300} mx={4}>
 			<Card>
 				<CardMedia
 					component='img'
-					image={`http://localhost:8000/${imgPath}`}
+					image={`http://localhost:8000/${image.path}`}
 					alt='slider'
 				/>
 				<CardContent>
-					<Typography>{`Order: ${order + 1}`}</Typography>
+					<Typography>{`Order: ${image.order + 1}`}</Typography>
 				</CardContent>
 				<CardActions>
 					<Stack
@@ -39,13 +44,13 @@ const CardItem = ({ imgPath, order, id, handleDelete }: props) => {
 						direction='row'
 						justifyContent='space-between'
 					>
-						<IconButton>
+						<IconButton id={image.id} onClick={handleLeftShift}>
 							<KeyboardArrowLeft />
 						</IconButton>
-						<IconButton id={id} onClick={handleDelete}>
+						<IconButton id={image.id} onClick={handleDelete}>
 							<Delete />
 						</IconButton>
-						<IconButton>
+						<IconButton id={image.id} onClick={handleRightShift}>
 							<KeyboardArrowRight />
 						</IconButton>
 					</Stack>

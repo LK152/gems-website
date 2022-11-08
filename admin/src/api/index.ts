@@ -15,12 +15,18 @@ export const fetchFolder = async (folderId: folderIds) => {
 
 export const postImages = async (data: any, folderId: folderIds) => {
 	const res = await axios.post(
-		`http://localhost:8000/images/${folderId}`,
+		`http://localhost:8000/images/folder/${folderId}`,
 		data,
 		{
 			headers: { 'Content-Type': 'multipart/form-data' },
 		}
 	);
+
+	return res;
+};
+
+export const patchImages = async (data: any) => {
+	const res = await axios.patch('http://localhost:8000/images', data);
 
 	return res;
 };
