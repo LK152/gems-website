@@ -1,5 +1,5 @@
 import { Box, Skeleton } from '@mui/material';
-import Image from 'next/image';
+import Image from 'next/legacy/image';
 import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css';
 
@@ -14,7 +14,6 @@ const Slider = ({ images }: { images: imageProps[] | null }) => {
 							src={`http://localhost:8000/${path}`}
 							layout='fill'
 							objectFit='contain'
-							quality={1}
 							priority
 						/>
 					</Box>

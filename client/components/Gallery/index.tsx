@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import Image from 'next/legacy/image';
 import { Box, Grid, Skeleton, Stack } from '@mui/material';
 
 const Gallery = ({ images }: { images: imageProps[] | null }) => {
