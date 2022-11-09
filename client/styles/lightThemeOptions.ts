@@ -1,4 +1,7 @@
 import { ThemeOptions } from '@mui/material/styles';
+import { Nunito } from '@next/font/google';
+
+const nunito = Nunito({ subsets: ['latin'] });
 
 const lightThemeOptions: ThemeOptions = {
 	palette: {
@@ -21,8 +24,8 @@ const lightThemeOptions: ThemeOptions = {
 		MuiTypography: {
 			defaultProps: {
 				textTransform: 'none',
-				color: 'black', 
-                fontFamily: 'Nunito Sans',
+				color: 'black',
+				fontFamily: nunito.style.fontFamily,
 			},
 		},
 		MuiButton: {

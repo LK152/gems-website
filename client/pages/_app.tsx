@@ -10,14 +10,15 @@ import {
 } from '@mui/material';
 import createEmotionCache from 'utilities/createEmotionCache';
 import lightThemeOptions from 'styles/lightThemeOptions';
-import Navbar from '@components/Navbar';
-import Footer from '@components/Footer';
+import dynamic from 'next/dynamic';
 import '@styles/styles.css';
 
 interface MyAppProps extends AppProps {
 	emotionCache?: EmotionCache;
 }
 
+const Navbar = dynamic(() => import('@components/Navbar'), { ssr: false });
+const Footer = dynamic(() => import('@components/Footer'), { ssr: false });
 const clientSideEmotionCache = createEmotionCache();
 const lightTheme = responsiveFontSizes(createTheme(lightThemeOptions));
 

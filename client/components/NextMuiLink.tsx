@@ -30,9 +30,9 @@ export const NextLinkComposed = React.forwardRef<
 			shallow={shallow}
 			passHref
 			locale={locale}
-		>
-			<Anchor ref={ref} {...other} />
-		</NextLink>
+			ref={ref}
+			{...other}
+		/>
 	);
 });
 
@@ -45,39 +45,47 @@ export type LinkProps = {
 } & Omit<NextLinkComposedProps, 'to' | 'linkAs' | 'href'> &
 	Omit<MuiLinkProps, 'href'>;
 
-const NextMuiLink = React.forwardRef<HTMLAnchorElement, LinkProps>(function NextMuiLink(
-	props,
-	ref
-) {
-	const {
-		activeClassName = 'active',
-		as,
-		className: classNameProps,
-		href,
-		linkAs: linkAsProp,
-		locale,
-		noLinkStyle,
-		prefetch,
-		replace,
-		role, // Link don't have roles.
-		scroll,
-		shallow,
-		...other
-	} = props;
+const NextMuiLink = React.forwardRef<HTMLAnchorElement, LinkProps>(
+	function NextMuiLink(props, ref) {
+		const {
+			activeClassName = 'active',
+			as,
+			className: classNameProps,
+			href,
+			linkAs: linkAsProp,
+			locale,
+			noLinkStyle,
+			prefetch,
+			replace,
+			role, // Link don't have roles.
+			scroll,
+			shallow,
+			...other
+		} = props;
 
-	const router = useRouter();
-	const pathname = typeof href === 'string' ? href : href.pathname;
-	const className = clsx(classNameProps, {
-		[activeClassName]: router.pathname === pathname && activeClassName,
-	});
-	const isExternal =
-		typeof href === 'string' &&
-		(href.indexOf('http') === 0 || href.indexOf('mailto:') === 0);
+		const router = useRouter();
+		const pathname = typeof href === 'string' ? href : href.pathname;
+		const className = clsx(classNameProps, {
+			[activeClassName]: router.pathname === pathname && activeClassName,
+		});
+		const isExternal =
+			typeof href === 'string' &&
+			(href.indexOf('http') === 0 || href.indexOf('mailto:') === 0);
 
-	if (isExternal) {
-		if (noLinkStyle) {
+		if (isExternal) {
+			if (noLinkStyle) {
+				return (
+					<Anchor
+						className={className}
+						href={href}
+						ref={ref}
+						{...other}
+					/>
+				);
+			}
+
 			return (
-				<Anchor
+				<MuiLink
 					className={className}
 					href={href}
 					ref={ref}
@@ -86,25 +94,31 @@ const NextMuiLink = React.forwardRef<HTMLAnchorElement, LinkProps>(function Next
 			);
 		}
 
-		return (
-			<MuiLink className={className} href={href} ref={ref} {...other} />
-		);
-	}
+		const linkAs = linkAsProp || as;
+		const nextjsProps = {
+			to: href,
+			linkAs,
+			replace,
+			scroll,
+			shallow,
+			prefetch,
+			locale,
+		};
 
-	const linkAs = linkAsProp || as;
-	const nextjsProps = {
-		to: href,
-		linkAs,
-		replace,
-		scroll,
-		shallow,
-		prefetch,
-		locale,
-	};
+		if (noLinkStyle) {
+			return (
+				<NextLinkComposed
+					className={className}
+					ref={ref}
+					{...nextjsProps}
+					{...other}
+				/>
+			);
+		}
 
-	if (noLinkStyle) {
 		return (
-			<NextLinkComposed
+			<MuiLink
+				component={NextLinkComposed}
 				className={className}
 				ref={ref}
 				{...nextjsProps}
@@ -112,16 +126,6 @@ const NextMuiLink = React.forwardRef<HTMLAnchorElement, LinkProps>(function Next
 			/>
 		);
 	}
-
-	return (
-		<MuiLink
-			component={NextLinkComposed}
-			className={className}
-			ref={ref}
-			{...nextjsProps}
-			{...other}
-		/>
-	);
-});
+);
 
 export default NextMuiLink;

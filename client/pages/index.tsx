@@ -1,9 +1,9 @@
 import type { NextPage } from 'next';
 import Slider from '@components/Slider';
 import Gallery from '@components/Gallery';
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 
-export const getImages = async () => {
+export const getStaticProps = async (folderId: string) => {
 	const slider = await (
 		await fetch('http://localhost:8000/images/folder/homeSlider')
 	).json();
@@ -15,8 +15,8 @@ export const getImages = async () => {
 };
 
 type props = {
-	slider: imageProps[];
-	gallery: imageProps[];
+	slider: imageProps[] | null;
+	gallery: imageProps[] | null;
 };
 
 const Home: NextPage<props> = ({ slider, gallery }) => {
