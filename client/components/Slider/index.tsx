@@ -6,7 +6,7 @@ import 'react-slideshow-image/dist/styles.css';
 const Slider = ({ images }: { images: imageProps[] | null }) => {
 	return (
 		<Slide transitionDuration={700} indicators easing='ease-in'>
-			{images ? (
+			{images && images.length !== 0 ? (
 				images.map(({ path }, idx) => (
 					<Box height={480} position='relative' key={idx}>
 						<Image

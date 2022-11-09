@@ -1,4 +1,4 @@
-import { AppBar, Box, Toolbar, Stack, Typography, styled } from '@mui/material';
+import { AppBar, Box, Toolbar, Stack, styled } from '@mui/material';
 import Image from 'next/image';
 import NextMuiLink from '@components/NextMuiLink';
 import Dropdown from './Dropdown';

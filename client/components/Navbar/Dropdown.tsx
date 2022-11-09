@@ -1,6 +1,6 @@
 import { Button, Typography } from '@mui/material';
 import styles from '@styles/Dropdown.module.css';
-import NextMuiLink from './NextMuiLink';
+import NextMuiLink from '../NextMuiLink';
 
 const Dropdown: React.FC<dropdownProps> = (props) => {
 	return (

@@ -7,7 +7,7 @@ const Gallery = ({ images }: { images: imageProps[] | null }) => {
 	return (
 		<Box width='80%' mx='auto' my={20}>
 			<Grid container rowSpacing={4} spacing={4}>
-				{images ? (
+				{images && images.length !== 0 ? (
 					images.map(({ path }, idx) => (
 						<Grid item xs={4} key={idx}>
 							<Box

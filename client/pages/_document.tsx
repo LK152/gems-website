@@ -7,13 +7,7 @@ class MyDocument extends Document {
 	render() {
 		return (
 			<Html>
-				<Head>
-					{/* eslint-disable-next-line @next/next/no-page-custom-font */}
-					<link
-						rel='stylesheet'
-						href='https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,500,700&display=swap'
-					/>
-				</Head>
+				<Head></Head>
 				<body>
 					<Main />
 					<NextScript />

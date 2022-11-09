@@ -10,7 +10,6 @@ import {
 } from '@mui/material';
 import createEmotionCache from 'utilities/createEmotionCache';
 import lightThemeOptions from 'styles/lightThemeOptions';
-import '@fontsource/nunito-sans';
 import Navbar from '@components/Navbar';
 import Footer from '@components/Footer';
 import '@styles/styles.css';
