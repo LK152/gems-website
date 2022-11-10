@@ -8,9 +8,9 @@ CREATE TABLE `image` (
     `order` INTEGER NOT NULL,
     `folderId` ENUM('homeSlider', 'homeGallery') NOT NULL,
 
+    UNIQUE INDEX `image_id_key`(`id`),
     UNIQUE INDEX `image_fileName_key`(`fileName`),
-    UNIQUE INDEX `image_order_key`(`order`),
-    INDEX `image_order_idx`(`order`),
+    INDEX `image_folderId_idx`(`folderId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -18,6 +18,21 @@ CREATE TABLE `image` (
 CREATE TABLE `folder` (
     `id` ENUM('homeSlider', 'homeGallery') NOT NULL,
 
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `formData` (
+    `id` VARCHAR(191) NOT NULL,
+    `name` VARCHAR(191) NOT NULL,
+    `school` VARCHAR(191) NOT NULL,
+    `grade` VARCHAR(191) NOT NULL,
+    `contact` VARCHAR(191) NOT NULL,
+    `question` VARCHAR(191) NOT NULL,
+    `sentAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+
+    UNIQUE INDEX `formData_id_key`(`id`),
+    INDEX `formData_school_grade_idx`(`school`, `grade`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 

@@ -1,8 +1,9 @@
 import { Button, Typography } from '@mui/material';
 import styles from '@styles/Dropdown.module.css';
+import { dropdownProps } from 'navbar';
 import NextMuiLink from '../NextMuiLink';
 
-const Dropdown: React.FC<dropdownProps> = (props) => {
+const Dropdown: React.FC<dropdownProps> = ({ title, subItems }) => {
 	return (
 		<div className={styles.dropdown}>
 			<Button
@@ -11,15 +12,26 @@ const Dropdown: React.FC<dropdownProps> = (props) => {
 				disableRipple
 				disableTouchRipple
 			>
-				<Typography>{props.title}</Typography>
+				<Typography>{title}</Typography>
 			</Button>
 			<ul className={styles.content}>
-				{props.subItems.map(({ title, path }, idx) => {
+				{subItems.map(({ title, path }, idx) => {
 					return (
 						<li key={idx}>
 							<NextMuiLink href={path}>
-								<Button sx={{ mx: 2, my: 1 }}>
-									<Typography noWrap>{title}</Typography>
+								<Button
+									sx={{ mx: 2, my: 1 }}
+									disableElevation
+									disableFocusRipple
+									disableRipple
+									disableTouchRipple
+								>
+									<Typography
+										sx={{ textDecoration: 'none' }}
+										noWrap
+									>
+										{title}
+									</Typography>
 								</Button>
 							</NextMuiLink>
 						</li>

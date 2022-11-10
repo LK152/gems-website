@@ -1,9 +1,9 @@
 import { NextPage } from "next";
 
-const math: NextPage = () => {
+const Math: NextPage = () => {
     return (
         <div></div>
     )
 }
 
-export default math;
+export default Math;

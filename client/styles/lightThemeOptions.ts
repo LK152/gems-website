@@ -6,12 +6,6 @@ const nunito = Nunito({ subsets: ['latin'] });
 const lightThemeOptions: ThemeOptions = {
 	palette: {
 		mode: 'light',
-		primary: {
-			main: '#FFF',
-		},
-		secondary: {
-			main: '#000',
-		},
 	},
 	components: {
 		MuiAppBar: {
@@ -28,9 +22,11 @@ const lightThemeOptions: ThemeOptions = {
 				fontFamily: nunito.style.fontFamily,
 			},
 		},
-		MuiButton: {
-			defaultProps: {
-				color: 'secondary',
+		MuiLink: {
+			styleOverrides: {
+				root: {
+					textDecoration: 'none',
+				},
 			},
 		},
 	},

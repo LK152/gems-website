@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const helmet = require('helmet');
 const imageRouter = require('./routers/imageRouter');
+const formRouter = require('./routers/formRouter');
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use(cors());
 app.use(helmet());
 
 app.use('/images', imageRouter);
+app.use('/forms', formRouter);
 
 app.listen(process.env.PORT, () => {
 	console.log(`Server listening on port ${process.env.PORT}`);

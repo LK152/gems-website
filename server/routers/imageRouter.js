@@ -20,8 +20,8 @@ router.get('/', async (req, res) => {
 			.then((data) => {
 				res.status(200).send(data);
 			})
-			.catch(() => {
-				res.status(400).send('Bad request');
+			.catch((err) => {
+				res.status(400).json({ msg: 'Bad request', err: err });
 			});
 	} catch (err) {
 		res.status(400).send(err);
@@ -39,8 +39,8 @@ router.get('/:id', async (req, res) => {
 				where: { id: id },
 			})
 			.then((image) => res.status(200).send(image))
-			.catch(() => {
-				res.status(400).send('Bad request');
+			.catch((err) => {
+				res.status(400).json({ msg: 'Bad request', err: err });
 			});
 	} catch (err) {
 		res.status(400).send(err);
@@ -61,8 +61,8 @@ router.get('/folder/:id', validateFolderId, async (req, res) => {
 			.then((data) => {
 				res.status(200).send(data);
 			})
-			.catch(() => {
-				res.status(400).send('Bad request');
+			.catch((err) => {
+				res.status(400).json({ msg: 'Bad request', err: err });
 			});
 	} catch (err) {
 		res.status(400).send(err);
@@ -120,8 +120,8 @@ router.post(
 				.then(() => {
 					res.status(201).send('Data record created');
 				})
-				.catch(() => {
-					res.status(400).send('Bad request');
+				.catch((err) => {
+					res.status(400).json({ msg: 'Bad request', err: err });
 				});
 		} catch (err) {
 			res.status(400).send(err);
@@ -136,8 +136,8 @@ router.patch('/', async (req, res) => {
 		req.body?.forEach(async (item) => {
 			await prisma.image
 				.update({ where: { id: item.id }, data: { order: item.order } })
-				.catch(() => {
-					res.status(400).send('Bad request');
+				.catch((err) => {
+					res.status(400).json({ msg: 'Bad request', err: err });
 				});
 		});
 
@@ -149,10 +149,15 @@ router.patch('/', async (req, res) => {
 
 router.delete('/', async (req, res) => {
 	try {
-		await prisma.folder.deleteMany().then(() => {
-			fs.rmSync('public/images', { recursive: true, force: true });
-			res.status(200).send('Bulk deleted');
-		});
+		await prisma.folder
+			.deleteMany()
+			.then(() => {
+				fs.rmSync('public/images', { recursive: true, force: true });
+				res.status(200).send('Bulk deleted');
+			})
+			.catch((err) => {
+				res.status(400).json({ msg: 'Bad request', err: err });
+			});
 	} catch (err) {
 		res.status(400).send(err);
 	}
@@ -171,11 +176,19 @@ router.delete('/:id', async (req, res) => {
 			})
 			.then(({ path }) => {
 				fs.unlinkSync(path);
+			})
+			.catch((err) => {
+				res.status(400).json({ msg: 'Bad request', err: err });
 			});
 
-		await prisma.image.delete({ where: { id: id } }).then(() => {
-			res.status(200).send('Data record deleted');
-		});
+		await prisma.image
+			.delete({ where: { id: id } })
+			.then(() => {
+				res.status(200).send('Data record deleted');
+			})
+			.catch((err) => {
+				res.status(400).json({ msg: 'Bad request', err: err });
+			});
 	} catch (err) {
 		res.status(400).send(err);
 	}
@@ -196,11 +209,19 @@ router.delete('/folder/:id', async (req, res) => {
 				paths.forEach(({ path }) => {
 					fs.unlinkSync(path);
 				});
+			})
+			.catch((err) => {
+				res.status(400).json({ msg: 'Bad request', err: err });
 			});
 
-		await prisma.folder.delete({ where: { id: id } }).then(() => {
-			res.status(200).send('Data folder deleted');
-		});
+		await prisma.folder
+			.delete({ where: { id: id } })
+			.then(() => {
+				res.status(200).send('Data folder deleted');
+			})
+			.catch((err) => {
+				res.status(400).json({ msg: 'Bad request', err: err });
+			});
 	} catch (err) {
 		res.status(400).send(err);
 	}

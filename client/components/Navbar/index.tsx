@@ -1,4 +1,5 @@
 import { AppBar, Box, Toolbar, Stack, styled } from '@mui/material';
+import { navbarPathsProps } from 'navbar';
 import Image from 'next/legacy/image';
 import NextMuiLink from '@components/NextMuiLink';
 import Dropdown from './Dropdown';

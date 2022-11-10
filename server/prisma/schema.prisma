@@ -32,3 +32,15 @@ enum folderIds {
     homeSlider
     homeGallery
 }
+
+model formData {
+    id       String   @id @unique @default(uuid())
+    name     String
+    school   String
+    grade    String
+    contact  String
+    question String
+    sentAt   DateTime @default(now())
+
+    @@index([school, grade])
+}

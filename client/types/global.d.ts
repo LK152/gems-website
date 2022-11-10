@@ -9,23 +9,4 @@ declare global {
 		path: string;
 		size: number;
 	};
-
-	type navbarPathsProps = {
-		title: string;
-		subItems: navbarSubItems[];
-	};
-
-	type navbarSubItems = {
-		title: string;
-		path: string;
-	};
-
-	type dropdownProps = {
-		title: string;
-		subItems: navbarLinkProps[];
-	};
-
-	type preloadCtxType = {
-		navbarCtx: navbarCtxProps[];
-	};
 }
