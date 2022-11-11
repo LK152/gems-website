@@ -1,5 +1,5 @@
 import type { NextPage } from 'next';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import {
 	Box,
 	Paper,
@@ -8,26 +8,38 @@ import {
 	TextField,
 	Button,
 	Switch,
-	FormControlLabel,
 } from '@mui/material';
-import theme from '@styles/lightThemeOptions';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
+import useSessionStorage from '@hooks/useSessionStorage';
 
 interface formInputs {
-	name: string;
-	school: string;
-	grade: string | number;
-	contact: string;
-	question: string;
+	name?: string | undefined;
+	school?: string | undefined;
+	grade?: string | undefined;
+	contact?: string | undefined;
+	question?: string | undefined;
 }
 
 const charLim = 150;
 
+const defaultForm = {
+	name: '',
+	school: '',
+	grade: '',
+	contact: '',
+	question: '',
+};
+
 const ContactUs: NextPage = () => {
-	const [persist, setPersist] = useState<boolean>(false);
-	const { register, watch, handleSubmit, reset } = useForm<formInputs>();
-	const watchQuestion = watch('question', '');
+	const [wordCount, setWordCount] = useState<number>(0);
+	const [persistedForm, setPersistedForm] = useSessionStorage<formInputs>(
+		'persistedForm',
+		defaultForm
+	);
+	const { register, handleSubmit, reset, watch } = useForm<formInputs>({
+		defaultValues: persistedForm,
+	});
 
 	const onSubmit = async (data: formInputs) => {
 		console.log(data);
@@ -35,6 +47,16 @@ const ContactUs: NextPage = () => {
 			.post('http://localhost:8000/forms', data)
 			.then(() => reset());
 	};
+
+	useEffect(() => {
+		if (persistedForm.question !== undefined)
+			setWordCount(persistedForm.question.length);
+	}, [persistedForm.question]);
+
+	useEffect(() => {
+		const sub = watch((val) => setPersistedForm(val));
+		return () => sub.unsubscribe();
+	}, [setPersistedForm, watch]);
 
 	return (
 		<Box width='40%' mx='auto' my={8}>
@@ -87,22 +109,12 @@ const ContactUs: NextPage = () => {
 								margin='normal'
 								label='Question'
 								inputProps={{ maxLength: charLim }}
-								helperText={
-									watchQuestion &&
-									`${watchQuestion.length}/${charLim}`
-								}
+								helperText={`${wordCount}/${charLim}`}
 								{...register('question')}
 							/>
 							<Button variant='contained' type='submit'>
 								<Typography color='white'>Submit</Typography>
 							</Button>
-							<Stack direction='row' alignItems='center'>
-								<Switch
-									checked={persist}
-									onChange={() => setPersist(!persist)}
-								/>
-								<Typography>Persist form?</Typography>
-							</Stack>
 						</Stack>
 					</Box>
 				</Box>
