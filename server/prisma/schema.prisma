@@ -34,13 +34,13 @@ enum folderIds {
 }
 
 model formData {
-    id       String   @id @unique @default(uuid())
-    name     String
-    school   String
-    grade    String
-    contact  String
-    question String
-    sentAt   DateTime @default(now())
+    id        String   @id @unique @default(uuid())
+    name      String
+    school    String
+    grade     String
+    contact   String
+    question  String
+    createdAt DateTime @default(now())
 
     @@index([school, grade])
 }

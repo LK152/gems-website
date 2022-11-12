@@ -36,4 +36,19 @@ router.post('/', async (req, res) => {
 	}
 });
 
+router.delete('/', async (req, res) => {
+	try {
+		await prisma.formData
+			.deleteMany()
+			.then(() => {
+				res.status(201).send('Bulk deleted');
+			})
+			.catch((err) => {
+				res.status(400).json({ msg: 'Bad request', err: err });
+			});
+	} catch (err) {
+		res.status(400).send(err);
+	}
+});
+
 module.exports = router;

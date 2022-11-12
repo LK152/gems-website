@@ -29,7 +29,7 @@ CREATE TABLE `formData` (
     `grade` VARCHAR(191) NOT NULL,
     `contact` VARCHAR(191) NOT NULL,
     `question` VARCHAR(191) NOT NULL,
-    `sentAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
     UNIQUE INDEX `formData_id_key`(`id`),
     INDEX `formData_school_grade_idx`(`school`, `grade`),
