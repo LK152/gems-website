@@ -43,7 +43,7 @@ router.get('/:id', async (req, res) => {
 				res.status(400).json({ msg: 'Bad request', err: err });
 			});
 	} catch (err) {
-		res.status(400).send(err);
+		res.status(404).send(err);
 	}
 });
 

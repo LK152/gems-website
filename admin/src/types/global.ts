@@ -14,6 +14,15 @@ declare global {
 		order: number;
 	};
 
+	type formProps = {
+		id: string;
+		name: string;
+		school: string;
+		grade: string;
+		question: string;
+		createdAt?: string;
+	};
+
 	type contextProps = {
 		children: React.ReactNode;
 	};

@@ -18,7 +18,24 @@ router.get('/', async (req, res) => {
 	}
 });
 
-router.get('/:id', async (req, res) => {});
+router.get('/:id', async (req, res) => {
+	if (!req.params.id) throw new Error('No id specified');
+
+	const id = req.params.id;
+
+	try {
+		await prisma.formData
+			.findUnique({ where: { id: id } })
+			.then((data) => {
+				res.status(200).send(data);
+			})
+			.catch((err) => {
+				res.status(400).json({ msg: 'Bad request', err: err });
+			});
+	} catch (err) {
+		res.status(404).send(err);
+	}
+});
 
 router.post('/', async (req, res) => {
 	try {
@@ -42,6 +59,25 @@ router.delete('/', async (req, res) => {
 			.deleteMany()
 			.then(() => {
 				res.status(201).send('Bulk deleted');
+			})
+			.catch((err) => {
+				res.status(400).json({ msg: 'Bad request', err: err });
+			});
+	} catch (err) {
+		res.status(400).send(err);
+	}
+});
+
+router.delete('/:id', async (req, res) => {
+	if (!req.params.id) throw new Error('No id specified');
+
+	const id = req.params.id;
+
+	try {
+		await prisma.formData
+			.delete({ where: { id: id } })
+			.then(() => {
+				res.status(200).send('Form deleted');
 			})
 			.catch((err) => {
 				res.status(400).json({ msg: 'Bad request', err: err });
