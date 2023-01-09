@@ -1,4 +1,4 @@
-declare module 'navbar' {
+declare module 'navbarTypes' {
 	type navbarSubItems = {
 		title: string;
 		path: string;

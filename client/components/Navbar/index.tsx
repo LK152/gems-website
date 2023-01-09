@@ -1,5 +1,5 @@
 import { AppBar, Box, Toolbar, Stack, styled } from '@mui/material';
-import { navbarPathsProps } from 'navbar';
+import { navbarPathsProps } from 'navbarTypes';
 import Image from 'next/legacy/image';
 import NextMuiLink from '@components/NextMuiLink';
 import Dropdown from './Dropdown';
@@ -22,7 +22,7 @@ export const navbarPaths: navbarPathsProps[] = [
 		subItems: [
 			{ title: 'English', path: '/english' },
 			{ title: 'Science', path: '/science' },
-			{ title: 'Math', path: '/math' },
+			{ title: 'Math', path: '/math/aim-and-our-focus' },
 		],
 	},
 	{
@@ -45,7 +45,7 @@ export const navbarPaths: navbarPathsProps[] = [
 	},
 ];
 
-const Navbar: React.FC = () => {
+const Navbar = () => {
 	return (
 		<Box flexGrow={1}>
 			<AppBar position='fixed'>

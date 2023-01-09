@@ -9,4 +9,9 @@ declare global {
 		path: string;
 		size: number;
 	};
+
+	type sidebarElProps = {
+		title: string;
+		pointer: string;
+	};
 }
