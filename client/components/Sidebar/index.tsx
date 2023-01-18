@@ -2,6 +2,7 @@ import NextMuiLink from '@components/NextMuiLink';
 import { Box, Typography } from '@mui/material';
 import styles from '@styles/Sidebar.module.css';
 import { useRouter } from 'next/router';
+import React from 'react';
 
 const Sidebar = ({ props }: { props: sidebarElProps[] }) => {
 	const path = useRouter().asPath;
@@ -17,8 +18,8 @@ const Sidebar = ({ props }: { props: sidebarElProps[] }) => {
 								style={{
 									backgroundColor:
 										path === pointer
-											? '#616161'
-											: '#b1b2b3',
+											? '#a4d0f5'
+											: '#c7c7c7',
 								}}
 							>
 								<Box p={1}>

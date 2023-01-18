@@ -1,6 +1,7 @@
 export enum folderIds {
 	homeSlider = 'homeSlider',
 	homeGallery = 'homeGallery',
+	mathCurriculums = 'mathCurriculums',
 }
 
 declare global {

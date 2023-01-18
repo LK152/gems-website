@@ -38,8 +38,6 @@ const ImageList = ({ id, title, images, setImages }: props) => {
 
 	useEffect(() => setNewImages(images), [images]);
 
-	console.log(newImages, deletes);
-
 	const handleUpdate = () => {
 		deletes.forEach(({ id }) => deleteImage(id));
 		patchImages(newImages).then(() => setImages(newImages));
@@ -193,7 +191,10 @@ const ImageList = ({ id, title, images, setImages }: props) => {
 							<Update />
 							<Typography>Update</Typography>
 						</Button>
-						<Button onClick={() => setBulkOpen(true)}>
+						<Button
+							disabled={images === null || images?.length === 0}
+							onClick={() => setBulkOpen(true)}
+						>
 							<DeleteSweep />
 							<Typography textAlign='center'>
 								Bulk Delete
