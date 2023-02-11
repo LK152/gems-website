@@ -1,5 +1,6 @@
 import { NextPage } from 'next';
-import { Box, Grid, Typography } from '@mui/material';
+import { Box, Grid, Typography, Stack, IconButton } from '@mui/material';
+import { NavigateBefore, NavigateNext } from '@mui/icons-material';
 import Sidebar from '@components/Sidebar';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
@@ -11,6 +12,7 @@ const mathSidebar: sidebarElProps[] = [
 
 const Math: NextPage = () => {
 	const { pointer } = useRouter().query;
+	const [grade, setGrade] = useState<number>(7);
 
 	return (
 		<Grid container flexDirection='column'>
@@ -32,7 +34,25 @@ const Math: NextPage = () => {
 				</Grid>
 				<Grid item xs={9} mr={4}>
 					{pointer == 'curriculum' ? (
-						<Box></Box>
+						<Box>
+							<Grid container>
+								<Stack>
+									<IconButton
+										disabled={grade === 7}
+										onClick={() => setGrade(grade - 1)}
+									>
+										<NavigateBefore />
+									</IconButton>
+									<Typography>{`G${grade}`}</Typography>
+									<IconButton
+										disabled={grade === 12}
+										onClick={() => setGrade(grade + 1)}
+									>
+										<NavigateNext />
+									</IconButton>
+								</Stack>
+							</Grid>
+						</Box>
 					) : (
 						<>
 							<Grid item container flexDirection='column' my={4}>
