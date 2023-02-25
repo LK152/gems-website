@@ -1,4 +1,9 @@
-const folderIds = ['homeSlider', 'homeGallery', 'mathCurriculums', 'teachers'];
+const folderIds = [
+	'homeSlider',
+	'homeGallery',
+	'mathCurriculums',
+	'teachers',
+];
 
 const validate = (req, res, next) => {
 	if (folderIds.includes(req.params?.id)) {
