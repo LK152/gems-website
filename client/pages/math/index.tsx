@@ -3,7 +3,7 @@ import { Box, Grid, Typography } from '@mui/material';
 import { NextPage } from 'next';
 import { NextRouter, withRouter } from 'next/router';
 import styles from '@styles/Math.module.css';
-import AimAndOurFocus from './aimAndOurFocus';
+import AimAndOurFocus from './AimAndOurFocus';
 import Curriculum from './Curriculum';
 
 const tabs = [

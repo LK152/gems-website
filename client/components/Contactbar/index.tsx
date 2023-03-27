@@ -9,14 +9,14 @@ const Contactbar = () => {
 				bottom: '100px',
 				right: '20px',
 				backgroundColor: 'white',
-                borderRadius: '20px'
+				borderRadius: '20px',
 			}}
 		>
 			<Stack>
-				<IconButton>
+				<IconButton href={process.env.NEXT_PUBLIC_FB_LINK as string}>
 					<Facebook />
 				</IconButton>
-				<IconButton>
+				<IconButton href={process.env.NEXT_PUBLIC_IG_LINK as string}>
 					<Email />
 				</IconButton>
 				<IconButton>

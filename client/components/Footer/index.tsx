@@ -1,6 +1,6 @@
 import { Box, Stack, Typography } from '@mui/material';
-import NextMuiLink from './NextMuiLink';
-import { navbarPaths } from './Navbar';
+import NextMuiLink from '../NextMuiLink';
+import { navbarPaths } from '../Navbar';
 import { Map, Phone } from '@mui/icons-material';
 
 const Footer: React.FC = () => {
@@ -52,7 +52,7 @@ const Footer: React.FC = () => {
 						allowFullScreen
 						loading='lazy'
 						referrerPolicy='no-referrer-when-downgrade'
-					></iframe>
+					/>
 					<Stack
 						direction='row'
 						spacing={1}
