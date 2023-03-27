@@ -94,6 +94,7 @@ router.post(
 					};
 				}
 			);
+            console.log(payload)
 
 			await prisma.folder
 				.upsert({
@@ -121,7 +122,7 @@ router.post(
 					res.status(201).send('Data record created');
 				})
 				.catch((err) => {
-					res.status(400).json({ msg: 'Bad request', err: err });
+					res.status(400).json({ msg: 'Bad request POST', err: err });
 				});
 		} catch (err) {
 			res.status(400).send(err);

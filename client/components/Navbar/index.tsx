@@ -10,11 +10,11 @@ export const navbarPaths: navbarPathsProps[] = [
 	{
 		title: 'About',
 		subItems: [
-			{ title: 'Contact Us', path: '/contact-us' },
 			{ title: 'Teacher Introduction', path: '/teacher-intro' },
 			{ title: 'Press Room', path: '/press-room' },
 			{ title: 'Awards', path: '/awards' },
 			{ title: 'Career', path: '/career' },
+			{ title: 'Contact Us', path: '/contact-us' },
 		],
 	},
 	{
@@ -22,7 +22,7 @@ export const navbarPaths: navbarPathsProps[] = [
 		subItems: [
 			{ title: 'English', path: '/english' },
 			{ title: 'Science', path: '/science' },
-			{ title: 'Math', path: '/math/aim-and-our-focus' },
+			{ title: 'Math', path: '/math' },
 		],
 	},
 	{

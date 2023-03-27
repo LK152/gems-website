@@ -12,6 +12,7 @@ import createEmotionCache from 'utilities/createEmotionCache';
 import lightThemeOptions from 'styles/lightThemeOptions';
 import dynamic from 'next/dynamic';
 import '@styles/styles.css';
+import Contactbar from '@components/Contactbar';
 
 interface MyAppProps extends AppProps {
 	emotionCache?: EmotionCache;
@@ -39,6 +40,7 @@ const MyApp = (props: MyAppProps) => {
 					<CssBaseline />
 					<Navbar />
 					<Component {...pageProps} />
+					<Contactbar />
 					<Footer />
 				</ThemeProvider>
 			</CacheProvider>

@@ -6,19 +6,17 @@ import {
 	Typography,
 	Switch,
 } from '@mui/material';
-import Image from 'next/legacy/image';
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import useSessionStorage from '@hooks/useSessionStorage';
 import axios from 'axios';
-import Line from '@public/line.svg';
-import { Phone } from '@mui/icons-material';
 
 interface formInputs {
 	name: string;
 	school: string;
 	grade: string;
 	contact: string;
+	email: string;
 	question: string;
 }
 
@@ -27,6 +25,7 @@ const defaultForm: formInputs = {
 	school: '',
 	grade: '',
 	contact: '',
+	email: '',
 	question: '',
 };
 
@@ -34,7 +33,6 @@ const charLim = 150;
 
 const Form = () => {
 	const [wordCount, setWordCount] = useState<number>(0);
-	const [isPhone, setIsPhone] = useState<boolean>(false);
 	const [persist, setPersist] = useState<boolean>(false);
 	const [persistedForm, setPersistedForm] =
 		useSessionStorage<formInputs | null>('persistedForm', null);
@@ -98,7 +96,6 @@ const Form = () => {
 				justifyContent='space-evenly'
 			>
 				<TextField
-					required
 					margin='normal'
 					label='Name'
 					autoComplete='name'
@@ -106,6 +103,12 @@ const Form = () => {
 				/>
 				<TextField
 					required
+					margin='normal'
+					label='Email'
+					autoComplete='email'
+					{...register('email')}
+				/>
+				<TextField
 					margin='normal'
 					label='School'
 					autoComplete='school'
@@ -118,29 +121,12 @@ const Form = () => {
 					autoComplete='off'
 					{...register('grade')}
 				/>
-				<Stack
-					direction='row'
-					alignItems='center'
-					justifyContent='space-between'
-				>
-					<TextField
-						required
-						margin='normal'
-						label={isPhone ? 'Mobile' : 'Line ID'}
-						autoComplete={isPhone ? 'mobile' : 'lineId'}
-						{...register('contact')}
-					/>
-					<Stack direction='row' alignItems='center' mx='auto'>
-						<Box width='24px' height='100%'>
-							<Image src={Line} alt='line' layout='responsive' />
-						</Box>
-						<Switch
-							checked={isPhone}
-							onClick={() => setIsPhone(!isPhone)}
-						/>
-						<Phone />
-					</Stack>
-				</Stack>
+				<TextField
+					margin='normal'
+					label={'Mobile/Line ID'}
+					autoComplete={'contact'}
+					{...register('contact')}
+				/>
 				<TextField
 					required
 					multiline

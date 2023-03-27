@@ -41,6 +41,7 @@ model formData {
     school    String
     grade     String
     contact   String
+    email     String
     question  String
     createdAt DateTime @default(now())
 

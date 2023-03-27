@@ -1,7 +1,13 @@
 import Image from 'next/legacy/image';
 import { Box, Grid, Skeleton, Stack } from '@mui/material';
 
-const Gallery = ({ images }: { images: imageProps[] | null }) => {
+const Gallery = ({
+	images,
+	alt,
+}: {
+	images: imageProps[] | null;
+	alt: string;
+}) => {
 	console.log(images);
 
 	return (
@@ -20,7 +26,7 @@ const Gallery = ({ images }: { images: imageProps[] | null }) => {
 								}}
 							>
 								<Image
-									alt='Gallery image'
+									alt={alt}
 									src={`http://localhost:8000/${path}`}
 									width={1587}
 									height={2245}

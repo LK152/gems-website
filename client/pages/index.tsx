@@ -32,8 +32,8 @@ const Home: NextPage<props> = ({ slider, gallery }) => {
 
 	return (
 		<>
-			<Slider images={sliderImages} />
-			<Gallery images={galleryImages} />
+			<Slider images={sliderImages} alt='Slider Images' />
+			<Gallery images={galleryImages} alt='Gallery Images' />
 		</>
 	);
 };
