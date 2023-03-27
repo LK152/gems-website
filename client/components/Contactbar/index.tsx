@@ -13,13 +13,13 @@ const Contactbar = () => {
 			}}
 		>
 			<Stack>
-				<IconButton href={process.env.NEXT_PUBLIC_FB_LINK as string}>
+				<IconButton href='https://www.facebook.com/profile.php?id=100083182389754'>
 					<Facebook />
 				</IconButton>
-				<IconButton href={process.env.NEXT_PUBLIC_IG_LINK as string}>
+				<IconButton href='mailto: social.media@gems.com.tw'>
 					<Email />
 				</IconButton>
-				<IconButton>
+				<IconButton href='https://www.instagram.com/gems.academy_/'>
 					<Instagram />
 				</IconButton>
 			</Stack>
