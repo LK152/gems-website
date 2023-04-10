@@ -11,7 +11,7 @@ const tabs = [
 	{ title: 'Curriculum', tabId: 'curriculum' },
 ];
 
-export const getStaticProps = async () => {
+export const getServerSideProps = async () => {
 	const curriculumImages = await (
 		await fetch('http://localhost:8000/images/folder/mathCurriculums')
 	).json();

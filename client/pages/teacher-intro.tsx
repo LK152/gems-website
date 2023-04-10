@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import TeacherList from '@components/TeacherList';
 import { Box } from '@mui/material';
 
-export const getStaticProps = async () => {
+export const getServerSideProps = async () => {
 	const res = await (
 		await fetch('http://localhost:8000/images/folder/teachers')
 	).json();

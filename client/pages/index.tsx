@@ -3,7 +3,7 @@ import Slider from '@components/Slider';
 import Gallery from '@components/Gallery';
 import { useState, useEffect } from 'react';
 
-export const getStaticProps = async () => {
+export const getServerSideProps = async () => {
 	const slider = await (
 		await fetch('http://localhost:8000/images/folder/homeSlider')
 	).json();

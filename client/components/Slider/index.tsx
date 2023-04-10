@@ -12,7 +12,7 @@ const Slider = ({
 }) => {
 	return (
 		<Slide transitionDuration={700} indicators easing='ease-in'>
-			{images && images.length !== 0 ? (
+			{images && images !== undefined && images.length !== 0 ? (
 				images.map(({ path }, idx) => (
 					<Box height={480} position='relative' key={idx}>
 						<Image
